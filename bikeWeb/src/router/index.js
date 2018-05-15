@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 /*引入页面*/
-import Login from '@/views/login/login.vue'
-import Home from '@/views/home/home.vue'
-import BaiDuMap from "@/views/map/baidumap.vue";
+import Login from '@/components/login/login.vue'
+import Home from '@/components/home/home.vue'
+import BaiDuMap from "@/components/map/baidumap.vue";
 
 Vue.use(Router)
 
