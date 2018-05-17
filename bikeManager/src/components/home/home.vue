@@ -20,7 +20,7 @@ import { setCookie,getCookie,delCookie } from '../../assets/js/cookie.js'
             this.name = uname
             /*如果cookie不存在，则跳转到登录页*/
             if(uname == ""){
-                this.$router.push('/')
+                this.$router.push('/login')
             }
         },
         methods:{
@@ -30,7 +30,7 @@ import { setCookie,getCookie,delCookie } from '../../assets/js/cookie.js'
                 /*删除cookie*/
                 delCookie('username')
                 setTimeout(function(){
-                    this.$router.push('/')
+                    this.$router.push('/login')
                 }.bind(this),1000)
             }
         }
