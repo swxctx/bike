@@ -1,6 +1,6 @@
 <template>
     <!--地图容器-->
-      <div style="left:15%;margin-right:30%;height:450px;border:#ccc solid 1px;" id="allmap">
+      <div style="left:10%;margin-right:12%;height:450px;border:#ccc solid 1px;" id="allmap">
       </div>
 </template>
 

@@ -4,6 +4,8 @@ import Router from 'vue-router'
 import Login from '@/components/login/login.vue'
 import Home from '@/components/home/home.vue'
 import BaiDuMap from "@/components/map/baidumap.vue";
+import Menu from '@/components/menu/SideBar.vue'
+
 
 Vue.use(Router)
 
@@ -11,19 +13,26 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/',
-      name: 'Map',
-      component: BaiDuMap
+      path: "/",
+      name: "导航",
+      component: Menu,
+      children: [
+        {
+          path: '/login',
+          name: '登录',
+          component: Login
+        },
+        {
+          path: '/home',
+          name: '首页',
+          component: Home
+        },
+        {
+          path: '/map',
+          name: '定位',
+          component: BaiDuMap
+        }
+      ]
     }
   ]
 })
