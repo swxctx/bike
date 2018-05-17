@@ -1,7 +1,6 @@
 <template>
     <div>
-        <img src="../../assets/welcome.jpg" width="50%">
-        <h3>欢迎您 {{name}}</h3>
+        <h3>欢迎 {{name}}</h3>
         <a href="#" @click="quit">注销登录</a>
     </div>
 </template>
@@ -23,7 +22,7 @@ import { setCookie,getCookie,delCookie } from '../../assets/js/cookie.js'
             if(uname == ""){
                 this.$router.push('/login')
             }else{
-                
+                this.$router.push('/home')
             }
         },
         methods:{

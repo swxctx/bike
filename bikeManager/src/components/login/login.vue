@@ -6,20 +6,6 @@
             <input type="text" placeholder="请输入用户名" v-model="username">
             <input type="password" placeholder="请输入密码" v-model="password">
             <button v-on:click="login">登录</button>
-            <span v-on:click="ToRegister">没有账号？马上注册</span>
-        </div>
-
-        <div class="register-wrap" v-show="showRegister">
-            <h3>注册</h3>
-            <p v-show="showTishi">{{tishi}}</p>
-            <input type="text" placeholder="请输入手机号" v-model="phone">
-            <button type="primary" v-on:click="getsmsCode">获取验证码</button>
-            <input type="text" placeholder="请输入验证码" v-model="smsCode">
-            <input type="text" placeholder="请输入用户名" v-model="newUsername">
-            <input type="password" placeholder="请输入密码" v-model="newPassword">
-            <input type="password" placeholder="请再次输入密码" v-model="againPassword">
-            <button v-on:click="register">注册</button>
-            <span v-on:click="ToLogin">已有账号？马上登录</span>
         </div>
     </div>
 </template>
@@ -39,7 +25,6 @@ export default{
     data() {
         return {
             showLogin: true,
-            showRegister: false,
             showTishi: false,
             tishi: '',
             username: '',
@@ -58,10 +43,6 @@ export default{
         }
     },
     methods:{
-        ToRegister() {
-        this.showRegister = true
-        this.showLogin = false
-        },
         ToLogin() {
             this.showRegister = false
             this.showLogin = true
@@ -94,44 +75,6 @@ export default{
             //         }
             //     })
             // }
-        },
-        register(){
-            if(this.newUsername == "" || this.newPassword == ""){
-                alert("请输入用户名或密码")
-            }else{
-                let data = {'username':this.newUsername,'password':this.newPassword}
-                this.$http.post('http://127.0.0.1:8888/bs/account/v1/login_by_password',data).then((res)=>{
-                    console.log(res)
-                    if(res.data == "ok"){
-                        this.tishi = "注册成功"
-                        this.showTishi = true
-                        this.username = ''
-                        this.password = ''
-                        /*注册成功之后再跳回登录页*/
-                        setTimeout(function(){
-                            this.showRegister = false
-                            this.showLogin = true
-                            this.showTishi = false
-                        }.bind(this),1000)
-                    }
-                })
-            }
-        },
-        getsmsCode(){
-            if(this.phone == ""){
-                alert("请输入手机号")
-            }else{
-                let data = {'phone':this.phone}
-                this.$http.post('http://127.0.0.1:8888/bs/account/v1/login_by_password',data).then((res)=>{
-                    console.log(res)
-                    if(res.data == "ok"){
-                        this.tishi = "获取验证码成功"
-                        this.showTishi = true
-                        this.phone = ''
-                        this.smsCode = ''
-                    }
-                })
-            }
         }
     }
 }
