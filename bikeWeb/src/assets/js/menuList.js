@@ -48,6 +48,6 @@ export const MENULIST = [
     {
         menuName: "退出登录",
         menuIcon: "fz-ad-rizhi",
-        menuUrl: "/feedback"
+        menuUrl: "/logout"
     }
 ];

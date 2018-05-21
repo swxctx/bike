@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <a href="/login"></a>
-     <router-link tag='a' :to="'/home'" ><img src="./assets/logo.png"></router-link>
+    <!-- <a href="/login"></a> -->
+     <!-- <router-link tag='a' :to="'/home'" ><img src="./assets/logo.png"></router-link> -->
     <router-view/>
   </div>
 </template>

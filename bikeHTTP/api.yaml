@@ -1,0 +1,28 @@
+- Name: User
+  PackagePath: "api/user"
+  Desc: "用户相关"
+  RoutePrefix: "/bike/user"
+  AllPost: true
+  RouteImports:
+  RouteHandlers:
+  Routes:
+    - Name: Register
+      Desc: "注册"
+      Path: "/v1/register"
+      Method: "POST"
+      Arguments:
+        - "Username: string"
+        - "Phone: string"
+        - "Password: string"
+        - "Email: string, Optional"
+        - "Sex: int32, Optional"
+        - "Bio: string, Optional"
+      Result: nil
+    - Name: "Login"
+      Desc: "登录"
+      Path: "/v1/login"
+      Method: "GET"
+      Arguments:
+        - "Username: string"
+        - "Password: string"
+      Result: nil

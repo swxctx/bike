@@ -47,8 +47,7 @@ export default{
             newUsername: '',
             newPassword: '',
             againPassword: '',
-            phone: '',
-            smsCode: ''
+            phone: ''
         }
     },
     mounted(){
@@ -75,23 +74,13 @@ export default{
                 this.$http.post('http://127.0.0.1:8888/bs/account/v1/login_by_password',data,{"emulateJSON":true}).then((res)=>{
                     console.log(res)
                     /*接口的传值是(-1,该用户不存在),(0,密码错误)，同时还会检测管理员账号的值*/
-                    if(res.data.result == -1){
-                        this.tishi = "该用户不存在"
-                        this.showTishi = true
-                    }else if(res.data == 0){
-                        this.tishi = "密码输入错误"
-                        this.showTishi = true
-                    }else if(res.data == 'admin'){
-                    /*路由跳转this.$router.push*/
-                        this.$router.push('/main')
-                    }else{
-                        this.tishi = "登录成功"
-                        this.showTishi = true
-                        setCookie('username',this.username,1000*60)
-                        setTimeout(function(){
-                            this.$router.push('/home')
-                        }.bind(this),1000)
-                    }
+                    this.tishi = "登录成功"
+                    this.showTishi = true
+                    setCookie('username',this.username,1000*60)
+                    setCookie('access_token',data.access_token,10000*60)
+                    setTimeout(function(){
+                        this.$router.push('/home')
+                    }.bind(this),1000)
                 })
             }
         },
@@ -105,30 +94,13 @@ export default{
                     if(res.data == "ok"){
                         this.tishi = "注册成功"
                         this.showTishi = true
-                        this.username = ''
-                        this.password = ''
+                        this.username = data.username
                         /*注册成功之后再跳回登录页*/
                         setTimeout(function(){
                             this.showRegister = false
                             this.showLogin = true
                             this.showTishi = false
                         }.bind(this),1000)
-                    }
-                })
-            }
-        },
-        getsmsCode(){
-            if(this.phone == ""){
-                alert("请输入手机号")
-            }else{
-                let data = {'phone':this.phone}
-                this.$http.post('http://127.0.0.1:8888/bs/account/v1/login_by_password',data).then((res)=>{
-                    console.log(res)
-                    if(res.data == "ok"){
-                        this.tishi = "获取验证码成功"
-                        this.showTishi = true
-                        this.phone = ''
-                        this.smsCode = ''
                     }
                 })
             }

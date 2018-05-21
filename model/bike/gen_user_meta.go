@@ -23,7 +23,7 @@ var _ = utils.Int32
 type UserMeta struct {
 	Id        int32     `db:"id" json:"id"`
 	Uid       int32     `db:"uid" json:"uid"`
-	Sex       string    `db:"sex" json:"sex"`
+	Sex       int32     `db:"sex" json:"sex"`
 	Avatar    string    `db:"avatar" json:"avatar"`
 	Bio       string    `db:"bio" json:"bio"`
 	CardName  string    `db:"card_name" json:"card_name"`

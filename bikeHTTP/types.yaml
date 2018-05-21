@@ -1,0 +1,9 @@
+- Package: usercontroller
+  Path: "api/user"
+  Imports:
+  Types:
+    LoginResult:
+      Username: string
+      AccessToken: string
+      Phone: string
+      Email: string
