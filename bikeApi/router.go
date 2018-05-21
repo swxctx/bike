@@ -4,7 +4,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/swxctx/bike/bikeHTTP/api/user"
+	"github.com/swxctx/bike/bikeApi/api/user"
 )
 
 func registRoute(route *gin.Engine) {

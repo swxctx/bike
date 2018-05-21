@@ -7,6 +7,7 @@ import (
 	"github.com/domego/ginkits/db"
 	"github.com/domego/ginkits/redis"
 	"github.com/domego/gokits/log"
+
 	orm "github.com/swxctx/bike/model/bike"
 
 	yaml "gopkg.in/yaml.v2"

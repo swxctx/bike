@@ -1,4 +1,4 @@
-# bikeHTTP
+# bikeApi
 
 1. 基本项目结构;
 2. ORM + DBCache(Redis/Memcache);

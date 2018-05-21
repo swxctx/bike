@@ -31,6 +31,7 @@ export default{
             this.showTishi = true
             /*删除cookie*/
             delCookie('username')
+            delCookie('access_token')
             setTimeout(function(){
                 this.$router.push('/')
             }.bind(this),1000)

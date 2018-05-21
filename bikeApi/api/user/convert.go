@@ -11,6 +11,6 @@ func convertLoginResult(user *bike.User) *LoginResult {
 		Phone:    user.Phone,
 		Email:    user.Email,
 	}
-	result.AccessToken = middleware.GenAccessToken(user.Id)
+	result.AccessToken = bikemiddleware.GenAccessToken(user.Id)
 	return result
 }

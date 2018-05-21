@@ -9,7 +9,7 @@ import (
 	"syscall"
 
   "github.com/domego/gokits/log"
-  "github.com/swxctx/bike/bikeHTTP/cfg"
+  "github.com/swxctx/bike/bikeApi/cfg"
 )
 
 var (

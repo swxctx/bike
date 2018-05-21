@@ -9,7 +9,7 @@
     - Name: Register
       Desc: "注册"
       Path: "/v1/register"
-      Method: "POST"
+      Method: "GET"
       Arguments:
         - "Username: string"
         - "Phone: string"

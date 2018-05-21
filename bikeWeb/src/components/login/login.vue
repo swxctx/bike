@@ -12,10 +12,9 @@
         <div class="register-wrap" v-show="showRegister">
             <h3>注册</h3>
             <p v-show="showTishi">{{tishi}}</p>
-            <input type="text" placeholder="请输入手机号" v-model="phone">
-            <button type="primary" v-on:click="getsmsCode">获取验证码</button>
-            <input type="text" placeholder="请输入验证码" v-model="smsCode">
             <input type="text" placeholder="请输入用户名" v-model="newUsername">
+            <input type="text" placeholder="请输入手机号" v-model="phone">
+            <input type="text" placeholder="请输入邮箱(选填)" v-model="email">
             <input type="password" placeholder="请输入密码" v-model="newPassword">
             <input type="password" placeholder="请再次输入密码" v-model="againPassword">
             <button v-on:click="register">注册</button>
@@ -43,16 +42,17 @@ export default{
             showTishi: false,
             tishi: '',
             username: '',
-            password: '',
             newUsername: '',
+            phone: '',
+            password: '',
             newPassword: '',
             againPassword: '',
-            phone: ''
+            email: ''
         }
     },
     mounted(){
     /*页面挂载获取cookie，如果存在username的cookie，则跳转到主页，不需登录*/
-        if(getCookie('username')){
+        if(getCookie('username') && getCookie('access_token')){
             this.$router.push('/home')
         }
     },
@@ -71,35 +71,52 @@ export default{
             }else{
                 let data = {'username':this.username,'password':this.password}
                 /*接口请求*/
-                this.$http.post('http://127.0.0.1:8888/bs/account/v1/login_by_password',data,{"emulateJSON":true}).then((res)=>{
+                this.$http.post('http://127.0.0.1:8890/bike/user/v1/login',data,{"emulateJSON":true}).then((res)=>{
                     console.log(res)
-                    /*接口的传值是(-1,该用户不存在),(0,密码错误)，同时还会检测管理员账号的值*/
-                    this.tishi = "登录成功"
-                    this.showTishi = true
-                    setCookie('username',this.username,1000*60)
-                    setCookie('access_token',data.access_token,10000*60)
-                    setTimeout(function(){
-                        this.$router.push('/home')
-                    }.bind(this),1000)
+                    // console.log(res.data.error)
+                    if (res.success == false){
+                        alert(res.data.error.content)
+                    }
+                    if(res.data.success == true && res.data.result.username !="" && res.data.result.access_token != ""){
+                        console.log("success")
+                        this.tishi = "登录成功"
+                        this.showTishi = true
+                        setCookie('username',res.data.username,1000*60)
+                        setCookie('access_token',res.data.access_token,1000*60)
+                        setTimeout(function(){
+                            this.$router.push('/home')
+                        }.bind(this),1000)
+                    }
                 })
             }
         },
         register(){
             if(this.newUsername == "" || this.newPassword == ""){
                 alert("请输入用户名或密码")
-            }else{
-                let data = {'username':this.newUsername,'password':this.newPassword}
-                this.$http.post('http://127.0.0.1:8888/bs/account/v1/login_by_password',data).then((res)=>{
+            }
+            if(this.phone == ""){
+                alert("电话号码为必填项，请输入")
+            }
+            else{
+                let data = {'username':this.newUsername,'phone': this.phone,'password':this.newPassword,'email':this.email}
+                this.$http.post('http://127.0.0.1:8890/bike/user/v1/register',data,{"emulateJSON":true}).then((res)=>{
                     console.log(res)
-                    if(res.data == "ok"){
+                    if (res.data.success == false){
+                        alert(res.data.error.content)
+                    }
+                    if(res.success == true && res.data.result.username !="" && res.data.result.access_token != ""){
                         this.tishi = "注册成功"
                         this.showTishi = true
-                        this.username = data.username
+                        this.username = res.username
+                        setCookie('username',res.username,1000*60)
+                        setCookie('access_token',res.access_token,1000*60)
+                        setCookie('phone',res.phone,1000*60)
                         /*注册成功之后再跳回登录页*/
                         setTimeout(function(){
                             this.showRegister = false
                             this.showLogin = true
                             this.showTishi = false
+                            this.$router.push('/login')
                         }.bind(this),1000)
                     }
                 })

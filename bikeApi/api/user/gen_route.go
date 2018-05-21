@@ -13,6 +13,7 @@ func RegistRoute(route *gin.Engine) {
 	UserRouteGroup.Use(middleware.CommonHandler())
 	{
 		// 注册
+		UserRouteGroup.GET("/v1/register", DoRegister)
 		UserRouteGroup.POST("/v1/register", DoRegister)
 		// 登录
 		UserRouteGroup.GET("/v1/login", DoLogin)
