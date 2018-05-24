@@ -1,19 +1,24 @@
 export const MENULIST = [
     {
+        menuName: "立即使用",
+        menuIcon: "fz-ad-rizhi",
+        menuUrl: "/use"
+    },
+    {
         menuName: "我的",
         menuIcon: "fz-ad-icon-test",
         menuSubLink: [
             {
                 menuName: "个人资料",
-                menuUrl: "/map"
+                menuUrl: "/profile"
             },
             {
                 menuName: "实名认证",
-                menuUrl: "/home"
+                menuUrl: "/auth"
             },
             {
                 menuName: "使用记录",
-                menuUrl: "/login"
+                menuUrl: "/use_log"
             }
         ]
     },
@@ -22,16 +27,12 @@ export const MENULIST = [
         menuIcon: "fz-ad-guanggao",
         menuSubLink: [
             {
-                menuName: "消费明细",
-                menuUrl: "/ad/add"
+                menuName: "余额明细",
+                menuUrl: "/detail"
             },
             {
                 menuName: "充值",
-                menuUrl: "/ad/check"
-            },
-            {
-                menuName: "余额",
-                menuUrl: "/ad/check"
+                menuUrl: "/topup"
             }
         ]
     },

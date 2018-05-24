@@ -74,17 +74,17 @@ export default{
                 this.$http.post('http://127.0.0.1:8890/bike/user/v1/login',data,{"emulateJSON":true}).then((res)=>{
                     console.log(res)
                     // console.log(res.data.error)
-                    if (res.success == false){
+                    if (res.data.success == false){
                         alert(res.data.error.content)
                     }
                     if(res.data.success == true && res.data.result.username !="" && res.data.result.access_token != ""){
                         console.log("success")
                         this.tishi = "登录成功"
                         this.showTishi = true
-                        setCookie('username',res.data.username,1000*60)
-                        setCookie('access_token',res.data.access_token,1000*60)
+                        setCookie('username',res.data.result.username,1000*60)
+                        setCookie('access_token',res.data.result.access_token,1000*60)
                         setTimeout(function(){
-                            this.$router.push('/home')
+                            this.$router.push('/')
                         }.bind(this),1000)
                     }
                 })
@@ -107,10 +107,10 @@ export default{
                     if(res.success == true && res.data.result.username !="" && res.data.result.access_token != ""){
                         this.tishi = "注册成功"
                         this.showTishi = true
-                        this.username = res.username
-                        setCookie('username',res.username,1000*60)
-                        setCookie('access_token',res.access_token,1000*60)
-                        setCookie('phone',res.phone,1000*60)
+                        this.username = res.data.result.username
+                        setCookie('username',res.data.result.username,1000*60)
+                        setCookie('access_token',res.data.result.access_token,1000*60)
+                        setCookie('phone',res.data.result.phone,1000*60)
                         /*注册成功之后再跳回登录页*/
                         setTimeout(function(){
                             this.showRegister = false

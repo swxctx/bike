@@ -26,3 +26,10 @@
         - "Username: string"
         - "Password: string"
       Result: nil
+    - Name: "GetProfile"
+      Desc: "获取资料"
+      Path: "/v1/get_profile"
+      Method: "GET"
+      Arguments:
+      Result: nil
+

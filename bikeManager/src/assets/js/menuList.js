@@ -19,7 +19,7 @@ export const MENULIST = [
         menuSubLink: [
             {
                 menuName: "用户列表",
-                menuUrl: "/ad/add"
+                menuUrl: "/"
             },
             {
                 menuName: "用户封禁",
@@ -56,13 +56,8 @@ export const MENULIST = [
         ]
     },
     {
-        menuName: "帮助",
+        menuName: "退出登录",
         menuIcon: "fz-ad-guanli",
-        menuUrl: "/help"
-    },
-    {
-        menuName: "反馈",
-        menuIcon: "fz-ad-rizhi",
-        menuUrl: "/feedback"
+        menuUrl: "/logout"
     }
 ];

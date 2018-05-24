@@ -28,12 +28,9 @@ export default{
             showTishi: false,
             tishi: '',
             username: '',
+            name: '',
             password: '',
-            newUsername: '',
-            newPassword: '',
-            againPassword: '',
-            phone: '',
-            smsCode: ''
+            is_admin: ''
         }
     },
     mounted(){
@@ -48,33 +45,28 @@ export default{
             this.showLogin = true
         },
         login() {
-            // if(this.username == "" || this.password == ""){
-            //     alert("请输入用户名或密码")
-            // }else{
-            //     let data = {'username':this.username,'password':this.password}
-            //     /*接口请求*/
-            //     this.$http.post('http://127.0.0.1:8888/bs/account/v1/login_by_password',data,{"emulateJSON":true}).then((res)=>{
-            //         console.log(res)
-            //         /*接口的传值是(-1,该用户不存在),(0,密码错误)，同时还会检测管理员账号的值*/
-            //         if(res.data.result == -1){
-            //             this.tishi = "该用户不存在"
-            //             this.showTishi = true
-            //         }else if(res.data == 0){
-            //             this.tishi = "密码输入错误"
-            //             this.showTishi = true
-            //         }else if(res.data == 'admin'){
-            //         /*路由跳转this.$router.push*/
-            //             this.$router.push('/main')
-            //         }else{
-            //             this.tishi = "登录成功"
-            //             this.showTishi = true
-                        setCookie('username',this.username,1000*60)
+            if(this.username == "" || this.password == ""){
+                alert("请输入用户名或密码")
+            }else{
+                let data = {'username':this.username,'password':this.password}
+                /*接口请求*/
+                this.$http.post('http://127.0.0.1:8894/bike_mp/user/v1/login',data,{"emulateJSON":true}).then((res)=>{
+                    console.log(res)
+                    if (res.data.success == false) {
+                        alert(res.data.error.content)
+                    }
+                    if (res.data.success ==true && res.data.result.username !="") {
+                        this.tishi = "登录成功"
+                        this.showTishi = true
+                        setCookie('username',res.data.result.username,1000*60)
+                        setCookie('name',res.data.result.name,1000*60)
+                        setCookie('is_admin',res.data.result.is_admin,1000*60)
                         setTimeout(function(){
                             this.$router.push('/home')
                         }.bind(this),1000)
-            //         }
-            //     })
-            // }
+                    }
+                })
+            }
         }
     }
 }
