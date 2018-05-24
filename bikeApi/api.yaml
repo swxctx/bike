@@ -4,6 +4,7 @@
   RoutePrefix: "/bike/user"
   AllPost: true
   RouteImports:
+    - "github.com/swxctx/bike/middleware"
   RouteHandlers:
   Routes:
     - Name: Register
@@ -30,6 +31,89 @@
       Desc: "获取资料"
       Path: "/v1/get_profile"
       Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
       Arguments:
       Result: nil
-
+    - Name: "AuthCard"
+      Desc: "实名认证"
+      Path: "/v1/auth_card"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+        - "CardName: string"
+        - "CardId: string"
+      Result: nil
+- Name: Use
+  PackagePath: "api/use"
+  Desc: "使用相关"
+  RoutePrefix: "/bike/use"
+  AllPost: true
+  RouteImports:
+    - "github.com/swxctx/bike/middleware"
+  RouteHandlers:
+  Routes:
+    - Name: HistoryLog
+      Desc: "使用记录"
+      Path: "/v1/history_log"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+      Result: nil
+    - Name: StartUse
+      Desc: "开始使用"
+      Path: "/v1/start_use"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+        - "BikeId: int32"
+        - "PointLng: string"
+        - "PointLat: string"
+      Result: nil
+- Name: Bag
+  PackagePath: "api/bag"
+  Desc: "钱包相关"
+  RoutePrefix: "/bike/bag"
+  AllPost: true
+  RouteImports:
+    - "github.com/swxctx/bike/middleware"
+  RouteHandlers:
+  Routes:
+    - Name: Detail
+      Desc: "余额明细"
+      Path: "/v1/detail"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+      Result: nil
+    - Name: TopUp
+      Desc: "充值"
+      Path: "/v1/top_up"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+        - "Phone: string"
+        - "Amount: int32"
+      Result: nil
+- Name: FeedBack
+  PackagePath: "api/feedback"
+  Desc: "反馈"
+  RoutePrefix: "/bike/bag"
+  AllPost: true
+  RouteImports:
+    - "github.com/swxctx/bike/middleware"
+  RouteHandlers:
+  Routes:
+    - Name: report
+      Desc: "提交反馈"
+      Path: "/v1/report"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+      Result: nil

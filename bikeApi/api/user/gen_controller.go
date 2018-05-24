@@ -122,3 +122,75 @@ func DoLogin(c *gin.Context) {
 	}
 	kits.RenderSuccess(c, result)
 }
+
+// GetProfileArgs 获取资料请求参数
+type GetProfileArgs struct {
+	// BaseParam 基础公共参数
+	BaseParam
+	ClientInfo     paramkits.ClientInfo
+	CacheAPIKey    string
+	CacheArguments []string
+}
+
+// DoGetProfile 获取资料
+func DoGetProfile(c *gin.Context) {
+	params := GetProfileArgs{
+		CacheAPIKey: "user:get_profile",
+	}
+	c.Bind(&params.BaseParam)
+	params.ClientInfo = paramkits.ParseClientInfo(c)
+
+	result, hasError := doGetProfile(c, &params)
+	if hasError {
+		kits.RenderError(c, result)
+		return
+	}
+	kits.RenderSuccess(c, result)
+}
+
+// AuthCardArgs 实名认证请求参数
+type AuthCardArgs struct {
+	// BaseParam 基础公共参数
+	BaseParam
+	ClientInfo     paramkits.ClientInfo
+	CacheAPIKey    string
+	CacheArguments []string
+
+	CardName string `form:"card_name" json:"card_name"`
+	CardId   string `form:"card_id" json:"card_id"`
+}
+
+// DoAuthCard 实名认证
+func DoAuthCard(c *gin.Context) {
+	params := AuthCardArgs{
+		CacheAPIKey: "user:auth_card",
+	}
+	c.Bind(&params.BaseParam)
+	params.ClientInfo = paramkits.ParseClientInfo(c)
+	c.Bind(&params)
+
+	{
+		if utils.IsEmpty(params.CardName) {
+			kits.RenderError(c, &kits.RespErrorMessage{
+				Code:    kits.ErrorCodeArgumentLack,
+				Message: "card_name is required",
+			})
+			return
+		}
+
+		if utils.IsEmpty(params.CardId) {
+			kits.RenderError(c, &kits.RespErrorMessage{
+				Code:    kits.ErrorCodeArgumentLack,
+				Message: "card_id is required",
+			})
+			return
+		}
+	}
+
+	result, hasError := doAuthCard(c, &params)
+	if hasError {
+		kits.RenderError(c, result)
+		return
+	}
+	kits.RenderSuccess(c, result)
+}

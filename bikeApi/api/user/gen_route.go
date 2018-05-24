@@ -4,6 +4,8 @@ package usercontroller
 import (
 	"github.com/domego/ginkits/middleware"
 	"github.com/gin-gonic/gin"
+
+	"github.com/swxctx/bike/middleware"
 )
 
 var UserRouteGroup *gin.RouterGroup
@@ -18,5 +20,11 @@ func RegistRoute(route *gin.Engine) {
 		// 登录
 		UserRouteGroup.GET("/v1/login", DoLogin)
 		UserRouteGroup.POST("/v1/login", DoLogin)
+		// 获取资料
+		UserRouteGroup.GET("/v1/get_profile", bikemiddleware.AccessTokenTokenHandler(), DoGetProfile)
+		UserRouteGroup.POST("/v1/get_profile", bikemiddleware.AccessTokenTokenHandler(), DoGetProfile)
+		// 实名认证
+		UserRouteGroup.GET("/v1/auth_card", bikemiddleware.AccessTokenTokenHandler(), DoAuthCard)
+		UserRouteGroup.POST("/v1/auth_card", bikemiddleware.AccessTokenTokenHandler(), DoAuthCard)
 	}
 }

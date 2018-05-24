@@ -4,7 +4,6 @@ package usercontroller
 import (
 	"github.com/domego/ginkits"
 	"github.com/domego/ginkits/errors"
-	"github.com/domego/ginkits/params"
 
 	"github.com/domego/gokits/log"
 	"github.com/swxctx/bike/middleware"
@@ -16,7 +15,7 @@ import (
 var _ = log.Tracef
 var _ = kits.RenderSuccess
 
-type BaseParam paramkits.BaseParam
+type BaseParam bikemiddleware.BaseParam
 
 // doRegister 注册
 func doRegister(c *gin.Context, params *RegisterArgs) (result interface{}, hasError bool) {
@@ -76,4 +75,14 @@ func doLogin(c *gin.Context, params *LoginArgs) (result interface{}, hasError bo
 	}
 	loginResult := convertLoginResult(user)
 	return loginResult, false
+}
+
+// doGetProfile 获取资料
+func doGetProfile(c *gin.Context, params *GetProfileArgs) (result interface{}, hasError bool) {
+	return
+}
+
+// doAuthCard 实名认证
+func doAuthCard(c *gin.Context, params *AuthCardArgs) (result interface{}, hasError bool) {
+	return
 }
