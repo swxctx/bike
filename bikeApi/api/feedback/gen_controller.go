@@ -23,6 +23,8 @@ type reportArgs struct {
 	ClientInfo     paramkits.ClientInfo
 	CacheAPIKey    string
 	CacheArguments []string
+
+	Content string `form:"content" json:"content"`
 }
 
 // Doreport 提交反馈
@@ -32,6 +34,17 @@ func Doreport(c *gin.Context) {
 	}
 	c.Bind(&params.BaseParam)
 	params.ClientInfo = paramkits.ParseClientInfo(c)
+	c.Bind(&params)
+
+	{
+		if utils.IsEmpty(params.Content) {
+			kits.RenderError(c, &kits.RespErrorMessage{
+				Code:    kits.ErrorCodeArgumentLack,
+				Message: "content is required",
+			})
+			return
+		}
+	}
 
 	result, hasError := doreport(c, &params)
 	if hasError {

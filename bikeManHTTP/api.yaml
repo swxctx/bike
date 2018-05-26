@@ -1,9 +1,10 @@
-- Name: User
-  PackagePath: "api/user"
+- Name: Account
+  PackagePath: "api/account"
   Desc: "用户相关"
-  RoutePrefix: "/bike_mp/user"
+  RoutePrefix: "/bike_mp/account"
   AllPost: true
   RouteImports:
+    - "github.com/swxctx/bike/middleware"
   RouteHandlers:
   Routes:
     - Name: "Login"
@@ -13,4 +14,69 @@
       Arguments:
         - "Username: string"
         - "Password: string"
+      Result: null
+    - Name: "UpdatePassword"
+      Desc: "修改密码"
+      Path: "/v1/update_password"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+        - "Password: string, Optional"
+      Result: null
+    - Name: "AddUser"
+      Desc: "添加用户"
+      Path: "/v1/update_user"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+        - "Username: string"
+        - "Name: string"
+        - "Password: string"
+        - "IsAdmin: int32"
+      Result: null
+- Name: User
+  PackagePath: "api/user"
+  Desc: "用户相关"
+  RoutePrefix: "/bike_mp/user"
+  AllPost: true
+  RouteImports:
+    - "github.com/swxctx/bike/middleware"
+  RouteHandlers:
+  Routes:
+    - Name: "UserList"
+      Desc: "用户列表"
+      Path: "/v1/get_list"
+      Method: "GET"
+      Arguments:
+      Result: null
+    - Name: "Forbid"
+      Desc: "封禁用户"
+      Path: "/v1/forbid"
+      Method: "GET"
+      Arguments:
+      Result: null
+- Name: Bike
+  PackagePath: "api/bike"
+  Desc: "单车相关"
+  RoutePrefix: "/bike_mp/bike"
+  AllPost: true
+  RouteImports:
+  RouteHandlers:
+  Routes:
+    - Name: "BikeList"
+      Desc: "单车列表"
+      Path: "/v1/get_list"
+      Method: "GET"
+      Arguments:
+        "Status: int32"
+      Result: null
+    - Name: "Change"
+      Desc: "单车状态管理"
+      Path: "/v1/change"
+      Method: "GET"
+      Arguments:
+        - "BikeId: "
+        - "Status: int32"
       Result: null

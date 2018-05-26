@@ -28,6 +28,7 @@ type UseLog struct {
 	LatiTude  string    `db:"lati_tude" json:"lati_tude"`
 	StartTs   int64     `db:"start_ts" json:"start_ts"`
 	EndTs     int64     `db:"end_ts" json:"end_ts"`
+	Amount    *int32    `db:"amount" json:"amount"`
 	CreatedAt time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 	Deleted   byte      `db:"deleted" json:"deleted"`
@@ -126,7 +127,7 @@ func (obj *UseLog) Delete() {
 func GetUseLogWhere(cond string, args ...interface{}) []*UseLog {
 	objs := []*UseLog{}
 	database := GetDB()
-	_, err := database.Select(&objs, "SELECT `id`, `uid`, `by_id`, `longi_tude`, `lati_tude`, `start_ts`, `end_ts`, `created_at`, `updated_at`, `deleted` FROM `use_log` WHERE "+cond, args...)
+	_, err := database.Select(&objs, "SELECT `id`, `uid`, `by_id`, `longi_tude`, `lati_tude`, `start_ts`, `end_ts`, `amount`, `created_at`, `updated_at`, `deleted` FROM `use_log` WHERE "+cond, args...)
 	if err != nil {
 		panic(err)
 	}
@@ -148,7 +149,7 @@ func GetUseLogCount(cond string, args ...interface{}) int64 {
 func GetUseLogFirst(cond string, args ...interface{}) *UseLog {
 	obj := &UseLog{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `uid`, `by_id`, `longi_tude`, `lati_tude`, `start_ts`, `end_ts`, `created_at`, `updated_at`, `deleted` FROM `use_log` WHERE "+cond+" LIMIT 1", args...)
+	err := database.SelectOne(obj, "SELECT `id`, `uid`, `by_id`, `longi_tude`, `lati_tude`, `start_ts`, `end_ts`, `amount`, `created_at`, `updated_at`, `deleted` FROM `use_log` WHERE "+cond+" LIMIT 1", args...)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -162,7 +163,7 @@ func GetUseLogFirst(cond string, args ...interface{}) *UseLog {
 func GetUseLogByField(name string, field interface{}) *UseLog {
 	obj := &UseLog{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `uid`, `by_id`, `longi_tude`, `lati_tude`, `start_ts`, `end_ts`, `created_at`, `updated_at`, `deleted` FROM `use_log` WHERE `"+name+"`=?", field)
+	err := database.SelectOne(obj, "SELECT `id`, `uid`, `by_id`, `longi_tude`, `lati_tude`, `start_ts`, `end_ts`, `amount`, `created_at`, `updated_at`, `deleted` FROM `use_log` WHERE `"+name+"`=?", field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -176,7 +177,7 @@ func GetUseLogByField(name string, field interface{}) *UseLog {
 func GetUseLogByFieldWithCondition(name, cond string, field interface{}) *UseLog {
 	obj := &UseLog{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `uid`, `by_id`, `longi_tude`, `lati_tude`, `start_ts`, `end_ts`, `created_at`, `updated_at`, `deleted` FROM `use_log` WHERE `"+name+"`=? "+cond, field)
+	err := database.SelectOne(obj, "SELECT `id`, `uid`, `by_id`, `longi_tude`, `lati_tude`, `start_ts`, `end_ts`, `amount`, `created_at`, `updated_at`, `deleted` FROM `use_log` WHERE `"+name+"`=? "+cond, field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -197,7 +198,7 @@ func GetUseLog(key int32) *UseLog {
 	}
 	if notFound {
 		database := GetDB()
-		err = database.SelectOne(obj, "SELECT `id`, `uid`, `by_id`, `longi_tude`, `lati_tude`, `start_ts`, `end_ts`, `created_at`, `updated_at`, `deleted` FROM `use_log` WHERE `id`=?", key)
+		err = database.SelectOne(obj, "SELECT `id`, `uid`, `by_id`, `longi_tude`, `lati_tude`, `start_ts`, `end_ts`, `amount`, `created_at`, `updated_at`, `deleted` FROM `use_log` WHERE `id`=?", key)
 		if err != nil {
 			if err.Error() == sql.ErrNoRows.Error() {
 				return nil

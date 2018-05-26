@@ -13,3 +13,14 @@ type LoginResult struct {
 	Phone       string `json:"phone"`
 	Username    string `json:"username"`
 }
+
+type UserProfile struct {
+	Avatar   string `json:"avatar"`
+	Bio      string `json:"bio"`
+	CardId   string `json:"card_id"`
+	CardName string `json:"card_name"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+	Sex      int32  `json:"sex"`
+	Username string `json:"username"`
+}

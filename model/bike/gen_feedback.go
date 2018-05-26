@@ -20,12 +20,10 @@ var _ = sql.ErrNoRows
 var _ = bytes.NewBuffer
 var _ = utils.Int32
 
-type TopLog struct {
+type Feedback struct {
 	Id        int32     `db:"id" json:"id"`
 	Uid       int32     `db:"uid" json:"uid"`
-	Count     int32     `db:"count" json:"count"`
-	TopTs     int64     `db:"top_ts" json:"top_ts"`
-	Status    *int32    `db:"status" json:"status"`
+	Content   string    `db:"content" json:"content"`
 	CreatedAt time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 	Deleted   byte      `db:"deleted" json:"deleted"`
@@ -34,18 +32,18 @@ type TopLog struct {
 	_tx *db.Transaction `db:"-"`
 }
 
-func NewTopLog() *TopLog {
-	obj := NewTopLogWithoutDB()
+func NewFeedback() *Feedback {
+	obj := NewFeedbackWithoutDB()
 	obj.SetDBInfo()
 	return obj
 }
 
-func NewTopLogWithoutDB() *TopLog {
-	obj := &TopLog{}
+func NewFeedbackWithoutDB() *Feedback {
+	obj := &Feedback{}
 	return obj
 }
 
-func (obj *TopLog) SetDBInfo() {
+func (obj *Feedback) SetDBInfo() {
 	database := GetDB()
 	obj._db = &db.DBInfo{
 		DB:    database.DB,
@@ -53,36 +51,36 @@ func (obj *TopLog) SetDBInfo() {
 	}
 }
 
-func (obj *TopLog) SetTransaction(tx *db.Transaction) {
+func (obj *Feedback) SetTransaction(tx *db.Transaction) {
 	obj._tx = tx
 }
 
-func (obj *TopLog) GetSqlExecutor() gorp.SqlExecutor {
+func (obj *Feedback) GetSqlExecutor() gorp.SqlExecutor {
 	if obj._tx != nil {
 		return obj._tx
 	}
 	return obj._db
 }
 
-func (obj *TopLog) PrimaryCacheKey() string {
-	return fmt.Sprintf("bike:orm:top_log:id:%v", obj.Id)
+func (obj *Feedback) PrimaryCacheKey() string {
+	return fmt.Sprintf("bike:orm:feedback:id:%v", obj.Id)
 }
 
-func (obj *TopLog) SaveToCache() error {
+func (obj *Feedback) SaveToCache() error {
 	if RedisClient != nil {
 		return rediskits.SetModelToCache(RedisClient, obj.PrimaryCacheKey(), obj, DefaultCacheTTL)
 	}
 	return nil
 }
 
-func (obj *TopLog) DeleteCache() error {
+func (obj *Feedback) DeleteCache() error {
 	if RedisClient != nil {
 		return rediskits.DeleteCache(RedisClient, obj.PrimaryCacheKey(), 3)
 	}
 	return nil
 }
 
-func (obj *TopLog) Insert() {
+func (obj *Feedback) Insert() {
 	database := obj.GetSqlExecutor()
 
 	obj.CreatedAt = time.Now()
@@ -98,7 +96,7 @@ func (obj *TopLog) Insert() {
 	}
 }
 
-func (obj *TopLog) Update() {
+func (obj *Feedback) Update() {
 	var err error
 	database := obj.GetSqlExecutor()
 
@@ -113,7 +111,7 @@ func (obj *TopLog) Update() {
 	}
 }
 
-func (obj *TopLog) Delete() {
+func (obj *Feedback) Delete() {
 
 	obj.Deleted = 1
 
@@ -121,10 +119,10 @@ func (obj *TopLog) Delete() {
 
 }
 
-func GetTopLogWhere(cond string, args ...interface{}) []*TopLog {
-	objs := []*TopLog{}
+func GetFeedbackWhere(cond string, args ...interface{}) []*Feedback {
+	objs := []*Feedback{}
 	database := GetDB()
-	_, err := database.Select(&objs, "SELECT `id`, `uid`, `count`, `top_ts`, `status`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE "+cond, args...)
+	_, err := database.Select(&objs, "SELECT `id`, `uid`, `content`, `created_at`, `updated_at`, `deleted` FROM `feedback` WHERE "+cond, args...)
 	if err != nil {
 		panic(err)
 	}
@@ -134,19 +132,19 @@ func GetTopLogWhere(cond string, args ...interface{}) []*TopLog {
 	return objs
 }
 
-func GetTopLogCount(cond string, args ...interface{}) int64 {
+func GetFeedbackCount(cond string, args ...interface{}) int64 {
 	database := GetDB()
-	cnt, err := database.SelectInt("SELECT count(1) FROM `top_log` WHERE "+cond, args...)
+	cnt, err := database.SelectInt("SELECT count(1) FROM `feedback` WHERE "+cond, args...)
 	if err != nil {
 		panic(err)
 	}
 	return cnt
 }
 
-func GetTopLogFirst(cond string, args ...interface{}) *TopLog {
-	obj := &TopLog{}
+func GetFeedbackFirst(cond string, args ...interface{}) *Feedback {
+	obj := &Feedback{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `uid`, `count`, `top_ts`, `status`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE "+cond+" LIMIT 1", args...)
+	err := database.SelectOne(obj, "SELECT `id`, `uid`, `content`, `created_at`, `updated_at`, `deleted` FROM `feedback` WHERE "+cond+" LIMIT 1", args...)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -157,10 +155,10 @@ func GetTopLogFirst(cond string, args ...interface{}) *TopLog {
 	return obj
 }
 
-func GetTopLogByField(name string, field interface{}) *TopLog {
-	obj := &TopLog{}
+func GetFeedbackByField(name string, field interface{}) *Feedback {
+	obj := &Feedback{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `uid`, `count`, `top_ts`, `status`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE `"+name+"`=?", field)
+	err := database.SelectOne(obj, "SELECT `id`, `uid`, `content`, `created_at`, `updated_at`, `deleted` FROM `feedback` WHERE `"+name+"`=?", field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -171,10 +169,10 @@ func GetTopLogByField(name string, field interface{}) *TopLog {
 	return obj
 }
 
-func GetTopLogByFieldWithCondition(name, cond string, field interface{}) *TopLog {
-	obj := &TopLog{}
+func GetFeedbackByFieldWithCondition(name, cond string, field interface{}) *Feedback {
+	obj := &Feedback{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `uid`, `count`, `top_ts`, `status`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE `"+name+"`=? "+cond, field)
+	err := database.SelectOne(obj, "SELECT `id`, `uid`, `content`, `created_at`, `updated_at`, `deleted` FROM `feedback` WHERE `"+name+"`=? "+cond, field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -185,8 +183,8 @@ func GetTopLogByFieldWithCondition(name, cond string, field interface{}) *TopLog
 	return obj
 }
 
-func GetTopLog(key int32) *TopLog {
-	obj := &TopLog{}
+func GetFeedback(key int32) *Feedback {
+	obj := &Feedback{}
 	var notFound = true
 	var err error
 	if RedisClient != nil {
@@ -195,7 +193,7 @@ func GetTopLog(key int32) *TopLog {
 	}
 	if notFound {
 		database := GetDB()
-		err = database.SelectOne(obj, "SELECT `id`, `uid`, `count`, `top_ts`, `status`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE `id`=?", key)
+		err = database.SelectOne(obj, "SELECT `id`, `uid`, `content`, `created_at`, `updated_at`, `deleted` FROM `feedback` WHERE `id`=?", key)
 		if err != nil {
 			if err.Error() == sql.ErrNoRows.Error() {
 				return nil

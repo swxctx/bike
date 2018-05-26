@@ -116,4 +116,5 @@
       Handlers: 
         - "bikemiddleware.AccessTokenTokenHandler()"
       Arguments:
+        - "Content: string"
       Result: nil

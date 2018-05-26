@@ -4,8 +4,8 @@ export const MENULIST = [
         menuIcon: "fz-ad-icon-test",
         menuSubLink: [
             {
-                menuName: "资料修改",
-                menuUrl: "/user_info"
+                menuName: "密码修改",
+                menuUrl: "/user_password"
             },
             {
                 menuName: "添加用户",
@@ -16,16 +16,7 @@ export const MENULIST = [
     {
         menuName: "用户管理",
         menuIcon: "fz-ad-guanggao",
-        menuSubLink: [
-            {
-                menuName: "用户列表",
-                menuUrl: "/"
-            },
-            {
-                menuName: "用户封禁",
-                menuUrl: "/ad/check"
-            }
-        ]
+        menuUrl: "/"
     },
     {
         menuName: "单车管理",

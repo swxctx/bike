@@ -7,3 +7,37 @@
       AccessToken: string
       Phone: string
       Email: string
+    UserProfile:
+      Sex: int32
+      Avatar: string
+      Bio: string
+      Username: string
+      Phone: string
+      Email: string
+      CardName: string
+      CardId: string
+- Package: bagcontroller
+  Path: "api/bag"
+  Imports:
+  Types:
+    BalanceDetail:
+      Balance: int32
+      List: "[]*TopDetail"
+    TopDetail:
+      Count: int32
+      TopTs: int64
+      Status: int32
+- Package: usecontroller
+  Path: "api/use"
+  Imports:
+  Types:
+    UseDetail:
+      List: "[]*Detail"
+    Detail:
+      BikeId: int32
+      LongiTude: string
+      LatiTude: string
+      StartTs: int64
+      EndTs: int64
+      Amount: int32
+

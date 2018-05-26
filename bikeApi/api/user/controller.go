@@ -27,21 +27,21 @@ func doRegister(c *gin.Context, params *RegisterArgs) (result interface{}, hasEr
 			Content: "用户名已经被注册了",
 		}, true
 	}
-	// // 2.校验手机号
+	// 2.校验手机号
 	if !bikemiddleware.CheckPhone(params.Phone) {
 		return &errorkits.ErrorMessage{
 			Code:    100102,
 			Content: "手机号不合法",
 		}, true
 	}
-	// // 3.校验用户名
+	// 3.校验用户名
 	if len(params.Username) > 12 {
 		return &errorkits.ErrorMessage{
 			Code:    100103,
 			Content: "用户名长度超出限制",
 		}, true
 	}
-	// // 4.校验密码
+	// 4.校验密码
 	if len(params.Password) > 16 || len(params.Password) < 6 {
 		return &errorkits.ErrorMessage{
 			Code:    100104,
@@ -79,10 +79,40 @@ func doLogin(c *gin.Context, params *LoginArgs) (result interface{}, hasError bo
 
 // doGetProfile 获取资料
 func doGetProfile(c *gin.Context, params *GetProfileArgs) (result interface{}, hasError bool) {
-	return
+	user := bike.GetUserFirst("`deleted`=0 AND `id`=?", params.BaseParam.Uid)
+	meta := bike.GetUserMetaFirst("`deleted`=0 AND `uid`=?", params.BaseParam.Uid)
+	if user == nil || user == nil {
+		return &errorkits.ErrorMessage{
+			Code:    100301,
+			Content: "暂时查询不到您的个人信息，请稍后再试",
+		}, true
+	}
+	return convertUserProfile(user, meta), false
 }
 
 // doAuthCard 实名认证
 func doAuthCard(c *gin.Context, params *AuthCardArgs) (result interface{}, hasError bool) {
+	if len(params.CardId) != 18 || len(params.CardName) == 0 {
+		return &errorkits.ErrorMessage{
+			Code:    100401,
+			Content: "您输入的身份证信息不合法，请重新输入",
+		}, true
+	}
+	meta := bike.GetUserMetaFirst("`deleted`=0 AND `uid`=?", params.BaseParam.Uid)
+	if meta == nil {
+		return &errorkits.ErrorMessage{
+			Code:    100402,
+			Content: "网络出错了，请稍后再试",
+		}, true
+	}
+	if len(meta.CardId) != 0 && len(meta.CardName) != 0 {
+		return &errorkits.ErrorMessage{
+			Code:    100403,
+			Content: "您已经认证过了，请勿重复提交",
+		}, true
+	}
+	meta.CardId = params.CardId
+	meta.CardName = params.CardName
+	meta.Update()
 	return
 }

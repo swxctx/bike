@@ -1,5 +1,5 @@
 // generate by ginpt
-package usercontroller
+package accountcontroller
 
 import (
 	"github.com/domego/ginkits"
@@ -31,4 +31,14 @@ func doLogin(c *gin.Context, params *LoginArgs) {
 		"name":     user.Name,
 		"is_admin": user.IsAdmin,
 	})
+}
+
+// doUpdatePassword 修改密码
+func doUpdatePassword(c *gin.Context, params *UpdatePasswordArgs) {
+
+}
+
+// doAddUser 添加用户
+func doAddUser(c *gin.Context, params *AddUserArgs) {
+
 }
