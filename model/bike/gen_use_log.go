@@ -28,7 +28,7 @@ type UseLog struct {
 	LatiTude  string    `db:"lati_tude" json:"lati_tude"`
 	StartTs   int64     `db:"start_ts" json:"start_ts"`
 	EndTs     int64     `db:"end_ts" json:"end_ts"`
-	Amount    *int32    `db:"amount" json:"amount"`
+	Amount    int32     `db:"amount" json:"amount"`
 	CreatedAt time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 	Deleted   byte      `db:"deleted" json:"deleted"`

@@ -16,7 +16,7 @@ export const MENULIST = [
     {
         menuName: "用户管理",
         menuIcon: "fz-ad-guanggao",
-        menuUrl: "/"
+        menuUrl: "/user_list"
     },
     {
         menuName: "单车管理",
@@ -24,11 +24,11 @@ export const MENULIST = [
         menuSubLink: [
             {
                 menuName: "单车列表",
-                menuUrl: "/puton/area"
+                menuUrl: "/bike_list"
             },
             {
                 menuName: "告警信息",
-                menuUrl: "/puton/regular"
+                menuUrl: "/bike_alarm"
             }
         ]
     },
@@ -38,11 +38,11 @@ export const MENULIST = [
         menuSubLink: [
             {
                 menuName: "单车数据统计",
-                menuUrl: "/status/adhost"
+                menuUrl: "/bike_stat"
             },
             {
                 menuName: "用户数据统计",
-                menuUrl: "/status/channel"
+                menuUrl: "/user_stat"
             }
         ]
     },

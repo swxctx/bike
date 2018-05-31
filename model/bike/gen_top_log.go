@@ -25,7 +25,7 @@ type TopLog struct {
 	Uid       int32     `db:"uid" json:"uid"`
 	Count     int32     `db:"count" json:"count"`
 	TopTs     int64     `db:"top_ts" json:"top_ts"`
-	Status    *int32    `db:"status" json:"status"`
+	Status    int32     `db:"status" json:"status"`
 	CreatedAt time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 	Deleted   byte      `db:"deleted" json:"deleted"`

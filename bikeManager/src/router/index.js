@@ -6,6 +6,9 @@ import Home from '@/components/home/home.vue'
 import Logout from '@/components/account/logout.vue'
 import AddUser from '@/components/account/addUser.vue'
 import Login from '@/components/account/login.vue'
+import UserList from '@/components/user/user.vue'
+import BikeList from '@/components/bike/bike.vue'
+import BikeAlarm from '@/components/bike/alarm.vue'
 
 
 Vue.use(Router)
@@ -41,6 +44,21 @@ export default new Router({
           path: '/add_user',
           name: '添加用户',
           component: AddUser
+        },
+        {
+          path: '/user_list',
+          name: '用户列表',
+          component: UserList
+        },
+        {
+          path: '/bike_list',
+          name: '单车列表',
+          component: BikeList
+        },
+        {
+          path: '/bike_alarm',
+          name: '告警信息',
+          component: BikeAlarm
         }
       ]
     }

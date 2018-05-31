@@ -11,7 +11,6 @@ import Menu from '@/components/menu/SideBar.vue'
 import FeedBack from '@/components/feedback/feedback.vue'
 import Help from '@/components/help/help.vue'
 
-import Bag from '@/components/bag/bag.vue'
 import Detail from '@/components/bag/detail.vue'
 import Topup from '@/components/bag/topup.vue'
 
@@ -48,21 +47,14 @@ export default new Router({
             component: BaiDuMap,
           },
           {
-            path: "/bag",
-            name: "钱包",
-            component: Bag,
-            children:[
-              {
-                path: "/detail",
-                name: "明细",
-                component: Detail,
-              },
-              {
-                path: "/topup",
-                name: "重置",
-                component: Topup,
-              }
-            ]
+            path: "/detail",
+            name: "明细",
+            component: Detail,
+          },
+          {
+            path: "/topup",
+            name: "充值",
+            component: Topup,
           },
           {
             path: "/user",
