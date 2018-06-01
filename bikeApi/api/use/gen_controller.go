@@ -72,21 +72,6 @@ func DoStartUse(c *gin.Context) {
 			return
 		}
 
-		if utils.IsEmpty(params.PointLng) {
-			kits.RenderError(c, &kits.RespErrorMessage{
-				Code:    kits.ErrorCodeArgumentLack,
-				Message: "point_lng is required",
-			})
-			return
-		}
-
-		if utils.IsEmpty(params.PointLat) {
-			kits.RenderError(c, &kits.RespErrorMessage{
-				Code:    kits.ErrorCodeArgumentLack,
-				Message: "point_lat is required",
-			})
-			return
-		}
 	}
 
 	result, hasError := doStartUse(c, &params)

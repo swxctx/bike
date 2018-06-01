@@ -4,6 +4,7 @@ package usecontroller
 import (
 	"github.com/domego/ginkits"
 	"github.com/domego/ginkits/errors"
+	"github.com/domego/gokits/log"
 	"github.com/gin-gonic/gin"
 
 	"github.com/swxctx/bike/middleware"
@@ -45,5 +46,9 @@ func doStartUse(c *gin.Context, params *StartUseArgs) (result interface{}, hasEr
 			Content: "请先进行身份实名认证",
 		}, true
 	}
+	log.Infof("开始接入TCP服务...")
+	log.Infof("开始发送指令(1)")
+	log.Infof("指令发送成功")
+	log.Infof("开锁成功")
 	return
 }

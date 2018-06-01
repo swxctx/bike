@@ -70,8 +70,8 @@
         - "bikemiddleware.AccessTokenTokenHandler()"
       Arguments:
         - "BikeId: int32"
-        - "PointLng: string"
-        - "PointLat: string"
+        - "PointLng: string, Optional"
+        - "PointLat: string, Optional"
       Result: nil
 - Name: Bag
   PackagePath: "api/bag"

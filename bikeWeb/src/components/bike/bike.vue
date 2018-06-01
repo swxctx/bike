@@ -45,7 +45,7 @@ export default{
                 }
                 let data = {'bike_id':this.bike_id,'access_token':access_token}
                 /*接口请求*/
-                this.$http.post('http://127.0.0.1:8890/bike/use/v1/open_lock',data,{"emulateJSON":true}).then((res)=>{
+                this.$http.post('http://127.0.0.1:8890/bike/use/v1/start_use',data,{"emulateJSON":true}).then((res)=>{
                     console.log(res)
                     if (res.data.success == false) {
                         alert(res.data.error.content)
