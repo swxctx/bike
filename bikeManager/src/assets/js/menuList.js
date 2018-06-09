@@ -33,18 +33,9 @@ export const MENULIST = [
         ]
     },
     {
-        menuName: "数据统计",
-        menuIcon: "fz-ad-statistics",
-        menuSubLink: [
-            {
-                menuName: "单车数据统计",
-                menuUrl: "/bike_stat"
-            },
-            {
-                menuName: "用户数据统计",
-                menuUrl: "/user_stat"
-            }
-        ]
+        menuName: "订单管理",
+        menuIcon: "fz-ad-guanggao",
+        menuUrl: "/order_list"
     },
     {
         menuName: "退出登录",

@@ -11,7 +11,7 @@ import (
 var FeedBackRouteGroup *gin.RouterGroup
 
 func RegistRoute(route *gin.Engine) {
-	FeedBackRouteGroup = route.Group("/bike/bag")
+	FeedBackRouteGroup = route.Group("/bike/feedback")
 	FeedBackRouteGroup.Use(middleware.CommonHandler())
 	{
 		// 提交反馈

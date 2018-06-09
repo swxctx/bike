@@ -9,6 +9,9 @@ import Login from '@/components/account/login.vue'
 import UserList from '@/components/user/user.vue'
 import BikeList from '@/components/bike/bike.vue'
 import BikeAlarm from '@/components/bike/alarm.vue'
+import UpdatePass from '@/components/account/updatePass.vue'
+import AddBike from '@/components/bike/addBike.vue'
+import OrderList from '@/components/order/order.vue'
 
 
 Vue.use(Router)
@@ -59,6 +62,16 @@ export default new Router({
           path: '/bike_alarm',
           name: '告警信息',
           component: BikeAlarm
+        },
+        {
+          path: '/user_password',
+          name: '修改密码',
+          component: UpdatePass
+        },
+        {
+          path: '/order_list',
+          name: '订单管理',
+          component: OrderList
         }
       ]
     }

@@ -25,8 +25,9 @@
       List: "[]*TopDetail"
     TopDetail:
       Count: int32
-      TopTs: int64
-      Status: int32
+      Phone: string
+      TopTs: string
+      Status: string
 - Package: usecontroller
   Path: "api/use"
   Imports:
@@ -37,7 +38,8 @@
       BikeId: int32
       LongiTude: string
       LatiTude: string
-      StartTs: int64
-      EndTs: int64
-      Amount: int32
+      StartTs: string
+      EndTs: string
+      Amount: string
+      AllTs: string
 

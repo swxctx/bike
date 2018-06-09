@@ -36,3 +36,39 @@ func DoUserList(c *gin.Context) {
 	doUserList(c, &params)
 
 }
+
+// ForbidArgs 封禁用户请求参数
+type ForbidArgs struct {
+	// BaseParam 基础公共参数
+	BaseParam
+	ClientInfo     paramkits.ClientInfo
+	CacheAPIKey    string
+	CacheArguments []string
+
+	Id     int32 `form:"id" json:"id"`
+	Status int32 `form:"status" json:"status"`
+}
+
+// DoForbid 封禁用户
+func DoForbid(c *gin.Context) {
+	params := ForbidArgs{
+		CacheAPIKey: "user:forbid",
+	}
+	c.Bind(&params.BaseParam)
+	params.ClientInfo = paramkits.ParseClientInfo(c)
+	c.Bind(&params)
+
+	{
+		if utils.IsEmpty(params.Id) {
+			kits.RenderError(c, &kits.RespErrorMessage{
+				Code:    kits.ErrorCodeArgumentLack,
+				Message: "id is required",
+			})
+			return
+		}
+
+	}
+
+	doForbid(c, &params)
+
+}

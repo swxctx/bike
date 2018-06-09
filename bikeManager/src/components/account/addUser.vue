@@ -3,14 +3,13 @@
         <div class="login-wrap" v-show="showLogin">
             <h3>添加用户</h3>
             <span>选择用户类型</span>
-            <select v-model="selected">  
+            <select v-model="is_admin">  
                 <option v-for="item in items" v-bind:value="item.value">{{item.text}}</option>  
             </select>  
             <p v-show="showTishi">{{tishi}}</p>
             <input type="text" placeholder="请输入用户名" v-model="username">
             <input type="text" placeholder="请输入真实姓名" v-model="name">
             <input type="password" placeholder="请输入密码" v-model="password">
-            <input type="password" placeholder="请输入密码" v-model="againPassword">
             <button v-on:click="addUser">确认添加</button>
         </div>
     </div>
@@ -38,8 +37,7 @@ export default{
             password: '',
             is_admin: '',
             general_user: '',
-            items: [{text:'管理员',value:'1'},{text:'普通用户',value:'0'}],  
-            selected: ''
+            items: [{text:'管理员',value:'1'},{text:'普通用户',value:'2'}],  
         }
     },
     mounted(){
@@ -56,19 +54,16 @@ export default{
                 alert("请输入用户姓名")
             }
             else{
-                let data = {'username':this.username,'password':this.password,'name': this.name,'is_admin': selected}
+                let data = {'username':this.username,'password':this.password,'name': this.name,'is_admin': this.is_admin}
                 /*接口请求*/
-                this.$http.post('http://127.0.0.1:8894/bike_mp/user/v1/login',data,{"emulateJSON":true}).then((res)=>{
+                this.$http.post('http://127.0.0.1:8894/bike_mp/account/v1/update_user',data,{"emulateJSON":true}).then((res)=>{
                     console.log(res)
                     if (res.data.success == false) {
                         alert(res.data.error.content)
                     }
-                    if (res.data.success ==true && res.data.result.username !="") {
-                        this.tishi = "登录成功"
+                    if (res.data =="") {
+                        this.tishi = "添加成功"
                         this.showTishi = true
-                        setCookie('username',res.data.result.username,1000*60)
-                        setCookie('name',res.data.result.name,1000*60)
-                        setCookie('is_admin',res.data.result.is_admin,1000*60)
                         setTimeout(function(){
                             this.$router.push('/home')
                         }.bind(this),1000)

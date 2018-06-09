@@ -37,12 +37,25 @@ export default{
             if (this.feedtext=="") {
                 alert("输入内容不能为空哦")
             }
-            let accsss_tokrn = getCookie("access_token")
+            let access_token = getCookie("access_token")
             if (access_token=="") {
                 alert("登录已过期，请重新登录后再提交")
-                this.$router.push('/home')
+                this.$router.push('/login')
+            }else{
+                let data = {'access_token': access_token,'content': this.feedtext}
+                this.$http.post('http://127.0.0.1:8890/bike/feedback/v1/report',data,{"emulateJSON":true}).then((res)=>{
+                    console.log(res)
+                    if (res.data.success == false){
+                        alert(res.data.error.content)
+                    }
+                    if(res.data.success == true){
+                        /*提交成功回到主页*/
+                        setTimeout(function(){
+                            this.$router.push('/')
+                        }.bind(this),1000)
+                    }
+                })
             }
-            console.log(this.feedtext)
         }
     }
 }

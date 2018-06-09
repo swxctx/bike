@@ -8,12 +8,13 @@ import (
 var _ = time.Now
 
 type Detail struct {
-	Amount    int32  `json:"amount"`
+	AllTs     string `json:"all_ts"`
+	Amount    string `json:"amount"`
 	BikeId    int32  `json:"bike_id"`
-	EndTs     int64  `json:"end_ts"`
+	EndTs     string `json:"end_ts"`
 	LatiTude  string `json:"lati_tude"`
 	LongiTude string `json:"longi_tude"`
-	StartTs   int64  `json:"start_ts"`
+	StartTs   string `json:"start_ts"`
 }
 
 type UseDetail struct {

@@ -38,6 +38,7 @@ func GetDB() *db.DBInfo {
 	dbmap := &gorp.DbMap{Db: database, Dialect: gorp.MySQLDialect{}}
 	dbmap.AddTableWithName(Admin{}, "admin").SetKeys(true, "id")
 	dbmap.AddTableWithName(Bike{}, "bike").SetKeys(true, "id")
+	dbmap.AddTableWithName(BikeAlarm{}, "bike_alarm").SetKeys(true, "id")
 	dbmap.AddTableWithName(Feedback{}, "feedback").SetKeys(true, "id")
 	dbmap.AddTableWithName(TopLog{}, "top_log").SetKeys(true, "id")
 	dbmap.AddTableWithName(UseLog{}, "use_log").SetKeys(true, "id")
@@ -68,6 +69,7 @@ func GetSerialDB() *db.DBInfo {
 	dbmap := &gorp.DbMap{Db: database, Dialect: gorp.MySQLDialect{}}
 	dbmap.AddTableWithName(Admin{}, "admin").SetKeys(true, "id")
 	dbmap.AddTableWithName(Bike{}, "bike").SetKeys(true, "id")
+	dbmap.AddTableWithName(BikeAlarm{}, "bike_alarm").SetKeys(true, "id")
 	dbmap.AddTableWithName(Feedback{}, "feedback").SetKeys(true, "id")
 	dbmap.AddTableWithName(TopLog{}, "top_log").SetKeys(true, "id")
 	dbmap.AddTableWithName(UseLog{}, "use_log").SetKeys(true, "id")

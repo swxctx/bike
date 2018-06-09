@@ -5,16 +5,16 @@
             <tr>
                 <td>编号</td>
                 <td>单车编号</td>
-                <td>红外数据</td>
-                <td>震动数据</td>
+                <td>上锁状态</td>
+                <td>单车状态</td>
                 <td>告警时间</td>
             </tr>
-            <tr v-for="person in people">
-                <td>{{ person.id  }}</td>
-                <td>{{ person.by_id  }}</td>
-                <td>{{ person.mh_count  }}</td>
-                <td>{{ person.sw_count  }}</td>
-                <td>{{ person.alarm_ts  }}</td>
+            <tr v-for="alarm in alarm_list">
+                <td>{{ alarm.id  }}</td>
+                <td>{{ alarm.by_id  }}</td>
+                <td>{{ alarm.mh_count  }}</td>
+                <td>{{ alarm.sw_count  }}</td>
+                <td>{{ alarm.alarm_ts  }}</td>
             </tr>             
         </table>
     </div>
@@ -25,23 +25,29 @@
 export default{
     data(){
         return{
-            people: [
+            alarm_list: [
                 {
-                    id: '1',
-                    by_id: '100001',
-                    mh_count: '异常',
-                    sw_count: '异常',
-                    alarm_ts: '2018-05-30 17:00:00'
-                },
-                {
-                    id: '2',
-                    by_id: '100002',
-                    mh_count: '异常',
-                    sw_count: '正常',
-                    alarm_ts: '2018-05-30 17:01:00'
+                    id: '',
+                    by_id: '',
+                    mh_count: '',
+                    sw_count:'',
+                    alarm_ts: ''
                 }
             ]        
         }
+    },
+    mounted(){
+        let data = {}
+        /*接口请求*/
+        this.$http.post('http://127.0.0.1:8894/bike_mp/bike/v1/alarm_list',data,{"emulateJSON":true}).then((res)=>{
+            console.log(res)
+            if (res.data.success == false){
+                alert(res.data.error.content)
+            }
+            if(res.data.success == true){
+                this.alarm_list = res.data.result.list.list
+            }
+        })
     }
 }
 </script>

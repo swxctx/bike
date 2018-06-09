@@ -26,5 +26,11 @@ func RegistRoute(route *gin.Engine) {
 		// 实名认证
 		UserRouteGroup.GET("/v1/auth_card", bikemiddleware.AccessTokenTokenHandler(), DoAuthCard)
 		UserRouteGroup.POST("/v1/auth_card", bikemiddleware.AccessTokenTokenHandler(), DoAuthCard)
+		// 更新资料
+		UserRouteGroup.GET("/v1/update_profile", bikemiddleware.AccessTokenTokenHandler(), DoUpdateProfile)
+		UserRouteGroup.POST("/v1/update_profile", bikemiddleware.AccessTokenTokenHandler(), DoUpdateProfile)
+		// 修改密码
+		UserRouteGroup.GET("/v1/update_password", bikemiddleware.AccessTokenTokenHandler(), DoUpdatePassword)
+		UserRouteGroup.POST("/v1/update_password", bikemiddleware.AccessTokenTokenHandler(), DoUpdatePassword)
 	}
 }

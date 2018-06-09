@@ -13,7 +13,8 @@ type BalanceDetail struct {
 }
 
 type TopDetail struct {
-	Count  int32 `json:"count"`
-	Status int32 `json:"status"`
-	TopTs  int64 `json:"top_ts"`
+	Count  int32  `json:"count"`
+	Phone  string `json:"phone"`
+	Status string `json:"status"`
+	TopTs  string `json:"top_ts"`
 }

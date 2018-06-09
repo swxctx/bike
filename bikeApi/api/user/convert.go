@@ -23,7 +23,7 @@ func convertUserProfile(user *bike.User, meta *bike.UserMeta) *UserProfile {
 		Sex:      meta.Sex,
 		Avatar:   meta.Avatar,
 		Bio:      meta.Bio,
-		CardName: meta.CardId,
+		CardName: meta.CardName,
 		CardId:   meta.CardId,
 	}
 	return result

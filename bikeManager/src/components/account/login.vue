@@ -50,7 +50,7 @@ export default{
             }else{
                 let data = {'username':this.username,'password':this.password}
                 /*接口请求*/
-                this.$http.post('http://127.0.0.1:8894/bike_mp/user/v1/login',data,{"emulateJSON":true}).then((res)=>{
+                this.$http.post('http://127.0.0.1:8894/bike_mp/account/v1/login',data,{"emulateJSON":true}).then((res)=>{
                     console.log(res)
                     if (res.data.success == false) {
                         alert(res.data.error.content)

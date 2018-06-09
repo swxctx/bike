@@ -26,6 +26,7 @@ type User struct {
 	Phone     string    `db:"phone" json:"phone"`
 	Password  string    `db:"password" json:"password"`
 	Email     string    `db:"email" json:"email"`
+	Status    int32     `db:"status" json:"status"`
 	CreatedAt time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 	Deleted   byte      `db:"deleted" json:"deleted"`
@@ -124,7 +125,7 @@ func (obj *User) Delete() {
 func GetUserWhere(cond string, args ...interface{}) []*User {
 	objs := []*User{}
 	database := GetDB()
-	_, err := database.Select(&objs, "SELECT `id`, `username`, `phone`, `password`, `email`, `created_at`, `updated_at`, `deleted` FROM `user` WHERE "+cond, args...)
+	_, err := database.Select(&objs, "SELECT `id`, `username`, `phone`, `password`, `email`, `status`, `created_at`, `updated_at`, `deleted` FROM `user` WHERE "+cond, args...)
 	if err != nil {
 		panic(err)
 	}
@@ -146,7 +147,7 @@ func GetUserCount(cond string, args ...interface{}) int64 {
 func GetUserFirst(cond string, args ...interface{}) *User {
 	obj := &User{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `username`, `phone`, `password`, `email`, `created_at`, `updated_at`, `deleted` FROM `user` WHERE "+cond+" LIMIT 1", args...)
+	err := database.SelectOne(obj, "SELECT `id`, `username`, `phone`, `password`, `email`, `status`, `created_at`, `updated_at`, `deleted` FROM `user` WHERE "+cond+" LIMIT 1", args...)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -160,7 +161,7 @@ func GetUserFirst(cond string, args ...interface{}) *User {
 func GetUserByField(name string, field interface{}) *User {
 	obj := &User{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `username`, `phone`, `password`, `email`, `created_at`, `updated_at`, `deleted` FROM `user` WHERE `"+name+"`=?", field)
+	err := database.SelectOne(obj, "SELECT `id`, `username`, `phone`, `password`, `email`, `status`, `created_at`, `updated_at`, `deleted` FROM `user` WHERE `"+name+"`=?", field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -174,7 +175,7 @@ func GetUserByField(name string, field interface{}) *User {
 func GetUserByFieldWithCondition(name, cond string, field interface{}) *User {
 	obj := &User{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `username`, `phone`, `password`, `email`, `created_at`, `updated_at`, `deleted` FROM `user` WHERE `"+name+"`=? "+cond, field)
+	err := database.SelectOne(obj, "SELECT `id`, `username`, `phone`, `password`, `email`, `status`, `created_at`, `updated_at`, `deleted` FROM `user` WHERE `"+name+"`=? "+cond, field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -195,7 +196,7 @@ func GetUser(key int32) *User {
 	}
 	if notFound {
 		database := GetDB()
-		err = database.SelectOne(obj, "SELECT `id`, `username`, `phone`, `password`, `email`, `created_at`, `updated_at`, `deleted` FROM `user` WHERE `id`=?", key)
+		err = database.SelectOne(obj, "SELECT `id`, `username`, `phone`, `password`, `email`, `status`, `created_at`, `updated_at`, `deleted` FROM `user` WHERE `id`=?", key)
 		if err != nil {
 			if err.Error() == sql.ErrNoRows.Error() {
 				return nil

@@ -15,6 +15,11 @@
             <input type="text" placeholder="请输入用户名" v-model="newUsername">
             <input type="text" placeholder="请输入手机号" v-model="phone">
             <input type="text" placeholder="请输入邮箱(选填)" v-model="email">
+            <input type="text" placeholder="个性签名(选填)" v-model="bio">
+            <span>选择性别</span>
+            <select v-model="sex">  
+                <option v-for="item in items" v-bind:value="item.value">{{item.text}}</option>  
+            </select>  
             <input type="password" placeholder="请输入密码" v-model="newPassword">
             <input type="password" placeholder="请再次输入密码" v-model="againPassword">
             <button v-on:click="register">注册</button>
@@ -37,6 +42,7 @@ import {setCookie,getCookie} from '../../assets/js/cookie.js'
 export default{
     data() {
         return {
+            items: [{text:'男',value:'1'},{text:'女',value:'2'}],  
             showLogin: true,
             showRegister: false,
             showTishi: false,
@@ -47,7 +53,9 @@ export default{
             password: '',
             newPassword: '',
             againPassword: '',
-            email: ''
+            email: '',
+            sex: '',
+            bio: ''
         }
     },
     mounted(){
@@ -98,16 +106,16 @@ export default{
                 alert("电话号码为必填项，请输入")
             }
             else{
-                let data = {'username':this.newUsername,'phone': this.phone,'password':this.newPassword,'email':this.email}
+                let data = {'username':this.newUsername,'phone': this.phone,'password':this.newPassword,'email':this.email,"sex": this.sex,"bio": this.bio}
                 this.$http.post('http://127.0.0.1:8890/bike/user/v1/register',data,{"emulateJSON":true}).then((res)=>{
                     console.log(res)
                     if (res.data.success == false){
                         alert(res.data.error.content)
                     }
-                    if(res.success == true && res.data.result.username !="" && res.data.result.access_token != ""){
+                    if(res.data.success == true && res.data.result.username !="" && res.data.result.access_token != ""){
+                        console.log("success")
                         this.tishi = "注册成功"
                         this.showTishi = true
-                        this.username = res.data.result.username
                         setCookie('username',res.data.result.username,1000*60)
                         setCookie('access_token',res.data.result.access_token,1000*60)
                         setCookie('phone',res.data.result.phone,1000*60)
@@ -116,7 +124,6 @@ export default{
                             this.showRegister = false
                             this.showLogin = true
                             this.showTishi = false
-                            this.$router.push('/login')
                         }.bind(this),1000)
                     }
                 })

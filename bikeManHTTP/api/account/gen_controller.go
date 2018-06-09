@@ -67,7 +67,9 @@ type UpdatePasswordArgs struct {
 	CacheAPIKey    string
 	CacheArguments []string
 
-	Password string `form:"password" json:"password"`
+	OldPassword string `form:"old_password" json:"old_password"`
+	Password    string `form:"password" json:"password"`
+	Username    string `form:"username" json:"username"`
 }
 
 // DoUpdatePassword 修改密码
@@ -80,6 +82,29 @@ func DoUpdatePassword(c *gin.Context) {
 	c.Bind(&params)
 
 	{
+		if utils.IsEmpty(params.OldPassword) {
+			kits.RenderError(c, &kits.RespErrorMessage{
+				Code:    kits.ErrorCodeArgumentLack,
+				Message: "old_password is required",
+			})
+			return
+		}
+
+		if utils.IsEmpty(params.Password) {
+			kits.RenderError(c, &kits.RespErrorMessage{
+				Code:    kits.ErrorCodeArgumentLack,
+				Message: "password is required",
+			})
+			return
+		}
+
+		if utils.IsEmpty(params.Username) {
+			kits.RenderError(c, &kits.RespErrorMessage{
+				Code:    kits.ErrorCodeArgumentLack,
+				Message: "username is required",
+			})
+			return
+		}
 	}
 
 	doUpdatePassword(c, &params)

@@ -45,6 +45,28 @@
         - "CardName: string"
         - "CardId: string"
       Result: nil
+    - Name: "UpdateProfile"
+      Desc: "更新资料"
+      Path: "/v1/update_profile"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+        - "Username: string"
+        - "Phone: string"
+        - "Email: string"
+        - "Bio: string"
+        - "Sex: int32"
+      Result: nil
+    - Name: "UpdatePassword"
+      Desc: "修改密码"
+      Path: "/v1/update_password"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+        - "OldPassword: string"
+        - "Password: string"
 - Name: Use
   PackagePath: "api/use"
   Desc: "使用相关"
@@ -103,7 +125,7 @@
 - Name: FeedBack
   PackagePath: "api/feedback"
   Desc: "反馈"
-  RoutePrefix: "/bike/bag"
+  RoutePrefix: "/bike/feedback"
   AllPost: true
   RouteImports:
     - "github.com/swxctx/bike/middleware"

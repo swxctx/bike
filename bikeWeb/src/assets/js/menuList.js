@@ -13,6 +13,10 @@ export const MENULIST = [
                 menuUrl: "/profile"
             },
             {
+                menuName: "修改密码",
+                menuUrl: "/update_pass"
+            },
+            {
                 menuName: "实名认证",
                 menuUrl: "/auth"
             },
@@ -35,11 +39,6 @@ export const MENULIST = [
                 menuUrl: "/topup"
             }
         ]
-    },
-    {
-        menuName: "帮助",
-        menuIcon: "fz-ad-guanli",
-        menuUrl: "/help"
     },
     {
         menuName: "反馈",

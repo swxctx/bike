@@ -2,6 +2,8 @@
 package usecontroller
 
 import (
+	"fmt"
+
 	"github.com/domego/ginkits"
 	"github.com/domego/ginkits/errors"
 	"github.com/domego/gokits/log"
@@ -9,6 +11,7 @@ import (
 
 	"github.com/swxctx/bike/middleware"
 	"github.com/swxctx/bike/model/bike"
+	"github.com/swxctx/bike/push"
 )
 
 var _ = kits.RenderSuccess
@@ -46,9 +49,24 @@ func doStartUse(c *gin.Context, params *StartUseArgs) (result interface{}, hasEr
 			Content: "请先进行身份实名认证",
 		}, true
 	}
+	// 查询单车信息
+	bikeInfo := bike.GetBikeFirst("`deleted`=0 AND `by_id`=?", params.BikeId)
+	if bikeInfo == nil {
+		return &errorkits.ErrorMessage{
+			Code:    400103,
+			Content: "网络出错，稍候再试",
+		}, true
+	}
+	if bikeInfo.Status == 1 {
+		return &errorkits.ErrorMessage{
+			Code:    400104,
+			Content: "此单车暂时不可用，请选择其他车辆",
+		}, true
+	}
+	ip := fmt.Sprintf("%s:%s", bikeInfo.Ip, bikeInfo.Port)
+	// message(0:->开锁)
+	message := "0"
 	log.Infof("开始接入TCP服务...")
-	log.Infof("开始发送指令(1)")
-	log.Infof("指令发送成功")
-	log.Infof("开锁成功")
+	push.DoTcpClient(ip, message)
 	return
 }

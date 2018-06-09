@@ -25,7 +25,9 @@ type Bike struct {
 	ById      int32     `db:"by_id" json:"by_id"`
 	LongiTude string    `db:"longi_tude" json:"longi_tude"`
 	LatiTude  string    `db:"lati_tude" json:"lati_tude"`
-	Status    *int32    `db:"status" json:"status"`
+	Ip        string    `db:"ip" json:"ip"`
+	Port      string    `db:"port" json:"port"`
+	Status    int32     `db:"status" json:"status"`
 	CreatedAt time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 	Deleted   byte      `db:"deleted" json:"deleted"`
@@ -41,7 +43,10 @@ func NewBike() *Bike {
 }
 
 func NewBikeWithoutDB() *Bike {
-	obj := &Bike{}
+	obj := &Bike{
+
+		Status: 0,
+	}
 	return obj
 }
 
@@ -124,7 +129,7 @@ func (obj *Bike) Delete() {
 func GetBikeWhere(cond string, args ...interface{}) []*Bike {
 	objs := []*Bike{}
 	database := GetDB()
-	_, err := database.Select(&objs, "SELECT `id`, `by_id`, `longi_tude`, `lati_tude`, `status`, `created_at`, `updated_at`, `deleted` FROM `bike` WHERE "+cond, args...)
+	_, err := database.Select(&objs, "SELECT `id`, `by_id`, `longi_tude`, `lati_tude`, `ip`, `port`, `status`, `created_at`, `updated_at`, `deleted` FROM `bike` WHERE "+cond, args...)
 	if err != nil {
 		panic(err)
 	}
@@ -146,7 +151,7 @@ func GetBikeCount(cond string, args ...interface{}) int64 {
 func GetBikeFirst(cond string, args ...interface{}) *Bike {
 	obj := &Bike{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `longi_tude`, `lati_tude`, `status`, `created_at`, `updated_at`, `deleted` FROM `bike` WHERE "+cond+" LIMIT 1", args...)
+	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `longi_tude`, `lati_tude`, `ip`, `port`, `status`, `created_at`, `updated_at`, `deleted` FROM `bike` WHERE "+cond+" LIMIT 1", args...)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -160,7 +165,7 @@ func GetBikeFirst(cond string, args ...interface{}) *Bike {
 func GetBikeByField(name string, field interface{}) *Bike {
 	obj := &Bike{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `longi_tude`, `lati_tude`, `status`, `created_at`, `updated_at`, `deleted` FROM `bike` WHERE `"+name+"`=?", field)
+	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `longi_tude`, `lati_tude`, `ip`, `port`, `status`, `created_at`, `updated_at`, `deleted` FROM `bike` WHERE `"+name+"`=?", field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -174,7 +179,7 @@ func GetBikeByField(name string, field interface{}) *Bike {
 func GetBikeByFieldWithCondition(name, cond string, field interface{}) *Bike {
 	obj := &Bike{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `longi_tude`, `lati_tude`, `status`, `created_at`, `updated_at`, `deleted` FROM `bike` WHERE `"+name+"`=? "+cond, field)
+	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `longi_tude`, `lati_tude`, `ip`, `port`, `status`, `created_at`, `updated_at`, `deleted` FROM `bike` WHERE `"+name+"`=? "+cond, field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -195,7 +200,7 @@ func GetBike(key int32) *Bike {
 	}
 	if notFound {
 		database := GetDB()
-		err = database.SelectOne(obj, "SELECT `id`, `by_id`, `longi_tude`, `lati_tude`, `status`, `created_at`, `updated_at`, `deleted` FROM `bike` WHERE `id`=?", key)
+		err = database.SelectOne(obj, "SELECT `id`, `by_id`, `longi_tude`, `lati_tude`, `ip`, `port`, `status`, `created_at`, `updated_at`, `deleted` FROM `bike` WHERE `id`=?", key)
 		if err != nil {
 			if err.Error() == sql.ErrNoRows.Error() {
 				return nil

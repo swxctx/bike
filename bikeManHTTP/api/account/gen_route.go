@@ -4,8 +4,6 @@ package accountcontroller
 import (
 	"github.com/domego/ginkits/middleware"
 	"github.com/gin-gonic/gin"
-
-	"github.com/swxctx/bike/middleware"
 )
 
 var AccountRouteGroup *gin.RouterGroup
@@ -18,10 +16,10 @@ func RegistRoute(route *gin.Engine) {
 		AccountRouteGroup.GET("/v1/login", DoLogin)
 		AccountRouteGroup.POST("/v1/login", DoLogin)
 		// 修改密码
-		AccountRouteGroup.GET("/v1/update_password", bikemiddleware.AccessTokenTokenHandler(), DoUpdatePassword)
-		AccountRouteGroup.POST("/v1/update_password", bikemiddleware.AccessTokenTokenHandler(), DoUpdatePassword)
+		AccountRouteGroup.GET("/v1/update_password", DoUpdatePassword)
+		AccountRouteGroup.POST("/v1/update_password", DoUpdatePassword)
 		// 添加用户
-		AccountRouteGroup.GET("/v1/update_user", bikemiddleware.AccessTokenTokenHandler(), DoAddUser)
-		AccountRouteGroup.POST("/v1/update_user", bikemiddleware.AccessTokenTokenHandler(), DoAddUser)
+		AccountRouteGroup.GET("/v1/update_user", DoAddUser)
+		AccountRouteGroup.POST("/v1/update_user", DoAddUser)
 	}
 }

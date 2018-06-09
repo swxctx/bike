@@ -2,9 +2,7 @@ package main
 
 import (
 	"sync"
-	"time"
 
-	"github.com/swxctx/bike/bikeWorker/mail"
 	"github.com/swxctx/bike/bikeWorker/tcpserver"
 )
 
@@ -12,13 +10,16 @@ var (
 	wg sync.WaitGroup
 )
 
+const (
+	listenIp   = "127.0.0.1"
+	listenPort = "8891"
+)
+
 func handleApp() {
 
 	go func() {
 		for {
-			mail.SendMail()
-			time.Sleep(time.Second * time.Duration(100))
-			tcpserver.DoTcpServer()
+			tcpserver.DoTcpServer(listenIp, listenPort)
 		}
 		wg.Done()
 	}()

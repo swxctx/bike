@@ -3,9 +3,9 @@
         <div class="login-wrap" v-show="showLogin">
             <h3>充值</h3>
             <p v-show="showTishi">{{tishi}}</p>
-            <input type="text" placeholder="请输入充值金额(元)" v-model="bike_id">
-            <input type="text" placeholder="请输入手机号" v-model="bike_id">
-            <button v-on:click="login">确定充值</button>
+            <input type="text" placeholder="请输入充值金额(元)" v-model="amount">
+            <input type="text" placeholder="请输入手机号(支付宝绑定账号)" v-model="phone">
+            <button v-on:click="topup">充值</button>
         </div>
     </div>
 </template>
@@ -27,35 +27,40 @@ export default{
             showLogin: true,
             showTishi: false,
             tishi: '',
-            bike_id: '',
+            amount: '',
+            phone: ''
         }
     },
-    mounted(){},
+    mounted(){
+        alert("注意!!! 手机号为支付宝绑定手机号，否则将充值失败")
+    },
     methods:{
         ToUseBike() {
             this.showLogin = true
         },
-        login() {
-            if(this.bike_id == ""){
-                alert("请输入单车编号")
+        topup() {
+            if(this.amount == ""){
+                alert("输入金额不能为空")
+            }if(this.phone==""){
+                alert("请输入手机号")
             }else{
-                alert("确定开锁吗?")
+                alert("确定充值吗?")
                 let access_token = getCookie('access_token')
                 if (access_token==""){
                     alert("登录已过期，请重新登录，即将跳转至登录页面")
                 }
-                let data = {'bike_id':this.bike_id,'access_token':access_token}
+                let data = {'access_token':access_token,"phone": this.phone,"amount":this.amount}
                 /*接口请求*/
-                this.$http.post('http://127.0.0.1:8890/bike/use/v1/open_lock',data,{"emulateJSON":true}).then((res)=>{
+                this.$http.post('http://127.0.0.1:8890/bike/bag/v1/top_up',data,{"emulateJSON":true}).then((res)=>{
                     console.log(res)
                     if (res.data.success == false) {
                         alert(res.data.error.content)
                     }
                     if (res.data.success ==true) {
-                        this.tishi = "开锁成功,可以开始使用啦"
+                        this.tishi = "充值成功"
                         this.showTishi = true
                         setTimeout(function(){
-                            this.$router.push('/map')
+                            this.$router.push('/detail')
                         }.bind(this),1000)
                     }
                 })

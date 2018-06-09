@@ -4,8 +4,6 @@ package usercontroller
 import (
 	"github.com/domego/ginkits/middleware"
 	"github.com/gin-gonic/gin"
-
-	"github.com/swxctx/bike/middleware"
 )
 
 var UserRouteGroup *gin.RouterGroup
@@ -15,7 +13,10 @@ func RegistRoute(route *gin.Engine) {
 	UserRouteGroup.Use(middleware.CommonHandler())
 	{
 		// 用户列表
-		UserRouteGroup.GET("/v1/user_list", DoUserList)
-		UserRouteGroup.POST("/v1/user_list", DoUserList)
+		UserRouteGroup.GET("/v1/get_list", DoUserList)
+		UserRouteGroup.POST("/v1/get_list", DoUserList)
+		// 封禁用户
+		UserRouteGroup.GET("/v1/forbid", DoForbid)
+		UserRouteGroup.POST("/v1/forbid", DoForbid)
 	}
 }

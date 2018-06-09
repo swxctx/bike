@@ -1,4 +1,4 @@
-package tcpserver
+package push
 
 import (
 	"net"
@@ -6,8 +6,8 @@ import (
 	"github.com/domego/gokits/log"
 )
 
-func DoTcpClient(server string, message string) {
-	tcpAddr, err := net.ResolveTCPAddr("tcp4", server)
+func DoTcpClient(addr string, message string) {
+	tcpAddr, err := net.ResolveTCPAddr("tcp4", addr)
 	if err != nil {
 		log.Errorf("ResolveTCPAddr err-> %v", err)
 	}

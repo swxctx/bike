@@ -51,6 +51,7 @@ func doRegister(c *gin.Context, params *RegisterArgs) (result interface{}, hasEr
 	user := bike.NewUser()
 	user.Username = params.Username
 	user.Phone = params.Phone
+	user.Email = params.Email
 	user.Password = bikemiddleware.GenPassword(params.Password)
 	user.Insert()
 	meta := bike.NewUserMeta()
@@ -115,4 +116,84 @@ func doAuthCard(c *gin.Context, params *AuthCardArgs) (result interface{}, hasEr
 	meta.CardName = params.CardName
 	meta.Update()
 	return
+}
+
+// doUpdateProfile 更新资料
+func doUpdateProfile(c *gin.Context, params *UpdateProfileArgs) (result interface{}, hasError bool) {
+	user := bike.GetUserFirst("`deleted`=0 AND `id`=?", params.BaseParam.Uid)
+	meta := bike.GetUserMetaFirst("`deleted`=0 AND `uid`=?", params.BaseParam.Uid)
+	if user == nil || meta == nil {
+		return &errorkits.ErrorMessage{
+			Code:    100501,
+			Content: "更新失败，请稍后再试",
+		}, true
+	}
+	var (
+		isUpadte bool
+	)
+	if user.Phone != params.Phone {
+		if !bikemiddleware.CheckPhone(params.Phone) {
+			return &errorkits.ErrorMessage{
+				Code:    100102,
+				Content: "手机号不合法",
+			}, true
+		}
+		user.Phone = params.Phone
+		isUpadte = true
+	}
+	if user.Username != params.Username {
+		if len(params.Username) > 12 {
+			return &errorkits.ErrorMessage{
+				Code:    100502,
+				Content: "用户名长度超出限制",
+			}, true
+		}
+		isuser := bike.GetUserFirst("`deleted`=0 AND `username`=? AND `id`!=?", params.Username, params.BaseParam.Uid)
+		if isuser != nil {
+			return &errorkits.ErrorMessage{
+				Code:    100101,
+				Content: "用户名已经存在了",
+			}, true
+		}
+		isUpadte = true
+	}
+	if user.Email != params.Email {
+		user.Email = params.Email
+		isUpadte = true
+	}
+	if meta.Bio != params.Bio && params.Bio != "暂未设置签名" {
+		meta.Bio = params.Bio
+		isUpadte = true
+	}
+	if meta.Sex != params.Sex {
+		meta.Sex = params.Sex
+		isUpadte = true
+	}
+	if isUpadte {
+		user.Update()
+		meta.Update()
+	}
+	return
+}
+
+// doUpdatePassword 修改密码
+func doUpdatePassword(c *gin.Context, params *UpdatePasswordArgs) {
+	user := bike.GetUserFirst("`deleted`=0 AND `id`=?", params.BaseParam.Uid)
+	if user == nil {
+		kits.RenderError(c, &errorkits.ErrorMessage{
+			Code:    100102,
+			Content: "网络不给力，请稍后再试",
+		})
+		return
+	}
+	pass := bikemiddleware.GenPassword(params.OldPassword)
+	if user.Password != pass {
+		kits.RenderError(c, &errorkits.ErrorMessage{
+			Code:    100103,
+			Content: "旧密码输入错误，请确认",
+		})
+		return
+	}
+	user.Password = bikemiddleware.GenPassword(params.Password)
+	user.Update()
 }

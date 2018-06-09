@@ -1,12 +1,12 @@
 <template>
     <div>
-        <a href="#" @click="quit">开始注销登录</a>
+        <!-- <a href="#" @click="quit">开始注销登录</a> -->
     </div>
 </template>
 
 <script>
 /*引入公共方法*/
-import { setCookie,getCookie,delCookie } from '../../assets/js/cookie.js'
+import { getCookie,delCookie } from '../../assets/js/cookie.js'
     export default{
         data(){
             return{
@@ -14,6 +14,7 @@ import { setCookie,getCookie,delCookie } from '../../assets/js/cookie.js'
             }
         },
         mounted(){
+            alert("确定注销登录吗?")
             /*页面挂载获取保存的cookie值，渲染到页面上*/
             let uname = getCookie('username')
             this.name = uname

@@ -54,8 +54,9 @@ func doTopUp(c *gin.Context, params *TopUpArgs) (result interface{}, hasError bo
 	}
 	topLog := bike.NewTopLog()
 	topLog.Uid = params.BaseParam.Uid
-	topLog.Count = params.Amount
+	topLog.Count = params.Amount * 100
 	topLog.TopTs = time.Now().Unix()
+	topLog.Phone = params.Phone
 	topLog.Insert()
 	return
 }
