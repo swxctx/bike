@@ -92,8 +92,19 @@
         - "bikemiddleware.AccessTokenTokenHandler()"
       Arguments:
         - "BikeId: int32"
-        - "PointLng: string, Optional"
-        - "PointLat: string, Optional"
+        - "PointLng: string"
+        - "PointLat: string"
+      Result: nil
+    - Name: FinishUse
+      Desc: "开始使用"
+      Path: "/v1/finish_use"
+      Method: "GET"
+      Handlers: 
+        - "bikemiddleware.AccessTokenTokenHandler()"
+      Arguments:
+        - "BikeId: int32"
+        - "PointLng: string,Optional"
+        - "PointLat: string,Optional"
       Result: nil
 - Name: Bag
   PackagePath: "api/bag"

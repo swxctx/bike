@@ -6,18 +6,20 @@ import (
 	"github.com/domego/gokits/log"
 )
 
-func DoTcpClient(addr string, message string) {
+func DoTcpClient(addr string, message string) error {
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", addr)
 	if err != nil {
 		log.Errorf("ResolveTCPAddr err-> %v", err)
+		return err
 	}
 	conn, err := net.DialTCP("tcp", nil, tcpAddr)
 	if err != nil {
 		log.Errorf("DialTCP err-> %v", err)
+		return err
 	}
-
 	log.Infof("connection success")
 	sender(conn, message)
+	return nil
 }
 
 //发送信息

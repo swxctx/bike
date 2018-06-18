@@ -26,7 +26,6 @@ type BikeAlarm struct {
 	MhCountOne int32     `db:"mh_count_one" json:"mh_count_one"`
 	MhCountTwo int32     `db:"mh_count_two" json:"mh_count_two"`
 	SwCountOne int32     `db:"sw_count_one" json:"sw_count_one"`
-	SwCountTwo int32     `db:"sw_count_two" json:"sw_count_two"`
 	AlarmTs    int64     `db:"alarm_ts" json:"alarm_ts"`
 	CreatedAt  time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt  time.Time `db:"updated_at" json:"updated_at"`
@@ -126,7 +125,7 @@ func (obj *BikeAlarm) Delete() {
 func GetBikeAlarmWhere(cond string, args ...interface{}) []*BikeAlarm {
 	objs := []*BikeAlarm{}
 	database := GetDB()
-	_, err := database.Select(&objs, "SELECT `id`, `by_id`, `mh_count_one`, `mh_count_two`, `sw_count_one`, `sw_count_two`, `alarm_ts`, `created_at`, `updated_at`, `deleted` FROM `bike_alarm` WHERE "+cond, args...)
+	_, err := database.Select(&objs, "SELECT `id`, `by_id`, `mh_count_one`, `mh_count_two`, `sw_count_one`, `alarm_ts`, `created_at`, `updated_at`, `deleted` FROM `bike_alarm` WHERE "+cond, args...)
 	if err != nil {
 		panic(err)
 	}
@@ -148,7 +147,7 @@ func GetBikeAlarmCount(cond string, args ...interface{}) int64 {
 func GetBikeAlarmFirst(cond string, args ...interface{}) *BikeAlarm {
 	obj := &BikeAlarm{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `mh_count_one`, `mh_count_two`, `sw_count_one`, `sw_count_two`, `alarm_ts`, `created_at`, `updated_at`, `deleted` FROM `bike_alarm` WHERE "+cond+" LIMIT 1", args...)
+	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `mh_count_one`, `mh_count_two`, `sw_count_one`, `alarm_ts`, `created_at`, `updated_at`, `deleted` FROM `bike_alarm` WHERE "+cond+" LIMIT 1", args...)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -162,7 +161,7 @@ func GetBikeAlarmFirst(cond string, args ...interface{}) *BikeAlarm {
 func GetBikeAlarmByField(name string, field interface{}) *BikeAlarm {
 	obj := &BikeAlarm{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `mh_count_one`, `mh_count_two`, `sw_count_one`, `sw_count_two`, `alarm_ts`, `created_at`, `updated_at`, `deleted` FROM `bike_alarm` WHERE `"+name+"`=?", field)
+	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `mh_count_one`, `mh_count_two`, `sw_count_one`, `alarm_ts`, `created_at`, `updated_at`, `deleted` FROM `bike_alarm` WHERE `"+name+"`=?", field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -176,7 +175,7 @@ func GetBikeAlarmByField(name string, field interface{}) *BikeAlarm {
 func GetBikeAlarmByFieldWithCondition(name, cond string, field interface{}) *BikeAlarm {
 	obj := &BikeAlarm{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `mh_count_one`, `mh_count_two`, `sw_count_one`, `sw_count_two`, `alarm_ts`, `created_at`, `updated_at`, `deleted` FROM `bike_alarm` WHERE `"+name+"`=? "+cond, field)
+	err := database.SelectOne(obj, "SELECT `id`, `by_id`, `mh_count_one`, `mh_count_two`, `sw_count_one`, `alarm_ts`, `created_at`, `updated_at`, `deleted` FROM `bike_alarm` WHERE `"+name+"`=? "+cond, field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -197,7 +196,7 @@ func GetBikeAlarm(key int32) *BikeAlarm {
 	}
 	if notFound {
 		database := GetDB()
-		err = database.SelectOne(obj, "SELECT `id`, `by_id`, `mh_count_one`, `mh_count_two`, `sw_count_one`, `sw_count_two`, `alarm_ts`, `created_at`, `updated_at`, `deleted` FROM `bike_alarm` WHERE `id`=?", key)
+		err = database.SelectOne(obj, "SELECT `id`, `by_id`, `mh_count_one`, `mh_count_two`, `sw_count_one`, `alarm_ts`, `created_at`, `updated_at`, `deleted` FROM `bike_alarm` WHERE `id`=?", key)
 		if err != nil {
 			if err.Error() == sql.ErrNoRows.Error() {
 				return nil

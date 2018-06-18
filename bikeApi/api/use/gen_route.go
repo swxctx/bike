@@ -20,5 +20,8 @@ func RegistRoute(route *gin.Engine) {
 		// 开始使用
 		UseRouteGroup.GET("/v1/start_use", bikemiddleware.AccessTokenTokenHandler(), DoStartUse)
 		UseRouteGroup.POST("/v1/start_use", bikemiddleware.AccessTokenTokenHandler(), DoStartUse)
+		// 开始使用
+		UseRouteGroup.GET("/v1/finish_use", bikemiddleware.AccessTokenTokenHandler(), DoFinishUse)
+		UseRouteGroup.POST("/v1/finish_use", bikemiddleware.AccessTokenTokenHandler(), DoFinishUse)
 	}
 }

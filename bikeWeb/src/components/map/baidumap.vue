@@ -15,7 +15,7 @@ export default{
     this.initMap()
   },
   methods: {
-  //这几个地方加this
+    //这几个地方加this
     initMap () {
       this.createMap() ; //创建地图 
     },
@@ -36,8 +36,7 @@ export default{
               // 设置cookie
               setCookie("point_lng",r.point.lng,1000*60)
               setCookie("point_lat",r.point.lat,1000*60)
-          }
-          else {
+          }else {
               alert('failed' + this.getStatus());
           }
       }, { enableHighAccuracy: true })

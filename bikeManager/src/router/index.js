@@ -59,6 +59,11 @@ export default new Router({
           component: BikeList
         },
         {
+          path: '/add_bike',
+          name: '添加单车',
+          component: AddBike
+        },
+        {
           path: '/bike_alarm',
           name: '告警信息',
           component: BikeAlarm

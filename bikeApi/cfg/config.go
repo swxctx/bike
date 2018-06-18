@@ -29,6 +29,7 @@ type Config struct {
 	DB       struct {
 		Bike *db.DBConfig `yaml:"bike"`
 	} `yaml:"db"`
+	PushIp string `yaml:"push_ip"`
 }
 
 // readConfig read and parse configFile

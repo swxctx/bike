@@ -70,7 +70,8 @@ export default{
                 if (res.data =="") {
                     setTimeout(function(){
                         // this.$router.push('/bike_list')
-                        alert("操作成功")
+                        // alert("操作成功")
+                        location.reload()
                     }.bind(this),1000)
                 }
             })

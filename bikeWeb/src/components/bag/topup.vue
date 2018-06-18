@@ -1,8 +1,11 @@
 <template>
     <div>
         <div class="login-wrap" v-show="showLogin">
-            <h3>充值</h3>
             <p v-show="showTishi">{{tishi}}</p>
+            <p>请扫描下方二维码完成支付宝充值</p>
+            <p>充值成功后我们会在第一时间完成您的账户充值</p>
+            <p>祝您生活愉快，谢谢</p>
+            <img src="../../assets/alipay.jpg" width=200></img></br></br>
             <input type="text" placeholder="请输入充值金额(元)" v-model="amount">
             <input type="text" placeholder="请输入手机号(支付宝绑定账号)" v-model="phone">
             <button v-on:click="topup">充值</button>
@@ -32,7 +35,6 @@ export default{
         }
     },
     mounted(){
-        alert("注意!!! 手机号为支付宝绑定手机号，否则将充值失败")
     },
     methods:{
         ToUseBike() {

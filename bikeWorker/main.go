@@ -8,12 +8,12 @@ import (
 	"strings"
 	"syscall"
 
-  "github.com/domego/gokits/log"
-  "github.com/swxctx/bike/bikeWorker/cfg"
+	"github.com/domego/gokits/log"
+	"github.com/swxctx/bike/bikeWorker/cfg"
 )
 
 var (
-	conf     *cfg.Config
+	conf    *cfg.Config
 	appName string
 	pid     int
 )
@@ -38,18 +38,17 @@ func writePid() {
 }
 
 func handleEnd() {
-  // os.Remove(pidFile)
+	// os.Remove(pidFile)
 }
 
 func handleReloadSignal() {
-  cfg.Reload()
+	cfg.Reload()
 }
 
 func main() {
 	flag.Parse()
 	writePid()
-
-  conf = cfg.Init()
+	conf = cfg.Init()
 	defer log.Infof("end")
 	handleApp()
 }

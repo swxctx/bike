@@ -77,7 +77,8 @@ export default{
                 }
                 if (res.data =="") {
                     setTimeout(function(){
-                        alert("操作成功")
+                        // alert("操作成功")
+                        location.reload()
                     }.bind(this),1000)
                 }
             })

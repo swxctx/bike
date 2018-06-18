@@ -24,6 +24,7 @@ import StartAuth from '@/components/user/startAuth.vue'
 
 import UpdateProfile from '@/components/user/update_profile.vue'
 import UpdatePass from '@/components/account/updatePass.vue'
+import UseFinish from '@/components/bike/finish.vue'
 
 
 
@@ -86,6 +87,11 @@ export default new Router({
             path: "/use",
             name: "开始使用",
             component: UseBike,
+          },
+          {
+            path: "/finish",
+            name: "使用中",
+            component: UseFinish,
           },
           {
             path: "/logout",

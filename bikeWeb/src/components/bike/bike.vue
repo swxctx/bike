@@ -4,7 +4,7 @@
             <h3>单车开锁</h3>
             <p v-show="showTishi">{{tishi}}</p>
             <input type="text" placeholder="请输入单车编号" v-model="bike_id">
-            <button v-on:click="login">开始开锁</button>
+            <button v-on:click="useBike">开始开锁</button>
         </div>
     </div>
 </template>
@@ -29,12 +29,14 @@ export default{
             bike_id: '',
         }
     },
-    mounted(){},
+    mounted(){
+        this.initMap()
+    },
     methods:{
         ToUseBike() {
             this.showLogin = true
         },
-        login() {
+        useBike() {
             if(this.bike_id == ""){
                 alert("请输入单车编号")
             }else{
@@ -43,7 +45,12 @@ export default{
                 if (access_token==""){
                     alert("登录已过期，请重新登录，即将跳转至登录页面")
                 }
-                let data = {'bike_id':this.bike_id,'access_token':access_token}
+                let point_lng = getCookie("point_lng")
+                let point_lat = getCookie("point_lat")
+                if (point_lat=="" || point_lng == ""){
+                    alert("定位失败，请重新定位")
+                }
+                let data = {'bike_id':this.bike_id,'access_token':access_token,"point_lng":point_lng,"point_lat": point_lat}
                 /*接口请求*/
                 this.$http.post('http://127.0.0.1:8890/bike/use/v1/start_use',data,{"emulateJSON":true}).then((res)=>{
                     console.log(res)
@@ -53,8 +60,9 @@ export default{
                     if (res.data.success ==true) {
                         this.tishi = "开锁成功,可以开始使用啦"
                         this.showTishi = true
+                        setCookie("use_bike_id",this.bike_id,1000*60)
                         setTimeout(function(){
-                            this.$router.push('/map')
+                            this.$router.push('/finish')
                         }.bind(this),1000)
                     }
                 })

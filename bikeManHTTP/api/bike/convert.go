@@ -19,7 +19,7 @@ func convertAlarmInfo(b *bike.BikeAlarm) *AlarmInfo {
 	} else {
 		result.MhCount = "打开"
 	}
-	if b.SwCountOne == 1 || b.SwCountTwo == 1 {
+	if b.SwCountOne == 1 {
 		result.SwCount = "异常"
 	} else {
 		result.SwCount = "正常"
