@@ -1,0 +1,7 @@
+- Name: bike
+  Database: bike
+  Username: root
+  Password: "0707"
+  Host: 127.0.0.1
+  Port: 3306
+  Table: "*"
