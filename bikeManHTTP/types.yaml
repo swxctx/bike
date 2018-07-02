@@ -1,0 +1,29 @@
+- Package: usercontroller
+  Path: "api/user"
+  Imports:
+  Types:
+    UserList:
+      List: "[]*UserProfile"
+    UserProfile:
+      Id: int32
+      Sex: string
+      Avatar: string
+      Bio: string
+      Username: string
+      Phone: string
+      Email: string
+      CardName: string
+      CardId: string
+      Status: string
+- Package: bikecontroller
+  Path: "api/bike"
+  Imports:
+  Types:
+    AlarmList:
+      List: "[]*AlarmInfo"
+    AlarmInfo:
+      Id: int32
+      ById: int32
+      MhCount: string
+      SwCount: string
+      AlarmTs: string

@@ -23,8 +23,10 @@ var _ = utils.Int32
 type TopLog struct {
 	Id        int32     `db:"id" json:"id"`
 	Uid       int32     `db:"uid" json:"uid"`
+	Phone     string    `db:"phone" json:"phone"`
 	Count     int32     `db:"count" json:"count"`
 	TopTs     int64     `db:"top_ts" json:"top_ts"`
+	Status    int32     `db:"status" json:"status"`
 	CreatedAt time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 	Deleted   byte      `db:"deleted" json:"deleted"`
@@ -123,7 +125,7 @@ func (obj *TopLog) Delete() {
 func GetTopLogWhere(cond string, args ...interface{}) []*TopLog {
 	objs := []*TopLog{}
 	database := GetDB()
-	_, err := database.Select(&objs, "SELECT `id`, `uid`, `count`, `top_ts`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE "+cond, args...)
+	_, err := database.Select(&objs, "SELECT `id`, `uid`, `phone`, `count`, `top_ts`, `status`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE "+cond, args...)
 	if err != nil {
 		panic(err)
 	}
@@ -145,7 +147,7 @@ func GetTopLogCount(cond string, args ...interface{}) int64 {
 func GetTopLogFirst(cond string, args ...interface{}) *TopLog {
 	obj := &TopLog{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `uid`, `count`, `top_ts`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE "+cond+" LIMIT 1", args...)
+	err := database.SelectOne(obj, "SELECT `id`, `uid`, `phone`, `count`, `top_ts`, `status`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE "+cond+" LIMIT 1", args...)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -159,7 +161,7 @@ func GetTopLogFirst(cond string, args ...interface{}) *TopLog {
 func GetTopLogByField(name string, field interface{}) *TopLog {
 	obj := &TopLog{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `uid`, `count`, `top_ts`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE `"+name+"`=?", field)
+	err := database.SelectOne(obj, "SELECT `id`, `uid`, `phone`, `count`, `top_ts`, `status`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE `"+name+"`=?", field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -173,7 +175,7 @@ func GetTopLogByField(name string, field interface{}) *TopLog {
 func GetTopLogByFieldWithCondition(name, cond string, field interface{}) *TopLog {
 	obj := &TopLog{}
 	database := GetDB()
-	err := database.SelectOne(obj, "SELECT `id`, `uid`, `count`, `top_ts`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE `"+name+"`=? "+cond, field)
+	err := database.SelectOne(obj, "SELECT `id`, `uid`, `phone`, `count`, `top_ts`, `status`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE `"+name+"`=? "+cond, field)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
 			return nil
@@ -194,7 +196,7 @@ func GetTopLog(key int32) *TopLog {
 	}
 	if notFound {
 		database := GetDB()
-		err = database.SelectOne(obj, "SELECT `id`, `uid`, `count`, `top_ts`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE `id`=?", key)
+		err = database.SelectOne(obj, "SELECT `id`, `uid`, `phone`, `count`, `top_ts`, `status`, `created_at`, `updated_at`, `deleted` FROM `top_log` WHERE `id`=?", key)
 		if err != nil {
 			if err.Error() == sql.ErrNoRows.Error() {
 				return nil

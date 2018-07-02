@@ -1,15 +1,14 @@
-package middleware
+package bikemiddleware
 
 import (
 	"fmt"
 	"strconv"
 	"strings"
 
-	"gitlab.xiaoenai.net/xserver/utils"
-
 	kits "github.com/domego/ginkits"
 	"github.com/domego/ginkits/errors"
 	"github.com/domego/ginkits/params"
+	"github.com/domego/gokits"
 	"github.com/domego/gokits/log"
 	"github.com/gin-gonic/gin"
 )

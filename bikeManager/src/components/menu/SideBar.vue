@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="sidebar" >
-    <ul class="sidebar-menu ">`
+    <ul class="sidebar-menu">
       <template v-for="(item ,index) in menulist">
         <li :class="currentUrl === item.menuUrl ? 'active':''">
           <template v-if="item.menuUrl">

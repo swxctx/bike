@@ -26,7 +26,7 @@ type User struct {
 	Phone     string    `db:"phone" json:"phone"`
 	Password  string    `db:"password" json:"password"`
 	Email     string    `db:"email" json:"email"`
-	Status    byte      `db:"status" json:"status"`
+	Status    int32     `db:"status" json:"status"`
 	CreatedAt time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 	Deleted   byte      `db:"deleted" json:"deleted"`

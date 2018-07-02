@@ -12,8 +12,11 @@ func RegistRoute(route *gin.Engine) {
 	UserRouteGroup = route.Group("/bike_mp/user")
 	UserRouteGroup.Use(middleware.CommonHandler())
 	{
-		// 登录
-		UserRouteGroup.GET("/v1/login", DoLogin)
-		UserRouteGroup.POST("/v1/login", DoLogin)
+		// 用户列表
+		UserRouteGroup.GET("/v1/get_list", DoUserList)
+		UserRouteGroup.POST("/v1/get_list", DoUserList)
+		// 封禁用户
+		UserRouteGroup.GET("/v1/forbid", DoForbid)
+		UserRouteGroup.POST("/v1/forbid", DoForbid)
 	}
 }

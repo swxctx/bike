@@ -1,36 +1,46 @@
 package main
 
 import (
-  "syscall"
-  "time"
-  "os"
+	"sync"
+	"time"
 
-  "github.com/fvbock/endless"
-  "github.com/gin-gonic/gin"
-  "github.com/domego/ginkits/middleware"
-  "github.com/domego/gokits/log"
+	"github.com/domego/gokits/log"
+	"github.com/swxctx/bike/bikeWorker/tcpserver"
+)
+
+var (
+	wg sync.WaitGroup
+)
+
+const (
+	// listenIp = "192.168.43.50"
+	listenIp   = "192.168.0.112"
+	listenPort = "8891"
 )
 
 func handleApp() {
-	gin.SetMode(conf.Env)
-	route := gin.New()
-	route.Use(middleware.Logger())
-	route.Use(gin.RecoveryWithWriter(os.Stderr))
-	registRoute(route)
-	endless.DefaultHammerTime = time.Second * 2
-	server := endless.NewServer(conf.Address, route)
-	// 捕获进程USR1信号，reloadConfig
-	server.SignalHooks[endless.PRE_SIGNAL][syscall.SIGUSR1] = append(server.SignalHooks[endless.PRE_SIGNAL][syscall.SIGUSR1], func() {
-		handleReloadSignal()
-	})
-	server.SetKeepAlivesEnabled(true)
 
-	if conf.Env != gin.DebugMode {
-		log.Infof("%s: Listening and serving HTTP on %s", appName, conf.Address)
-	}
-	err := server.ListenAndServe()
-	if err != nil {
-		handleEnd()
-		log.Errorf("%s", err)
-	}
+	// 连接发现服务
+	go func() {
+		for {
+			log.Infof("Listen server start success...")
+			tcpserver.DoTcpServer(listenIp, listenPort)
+			time.Sleep(time.Second * time.Duration(1))
+		}
+		wg.Done()
+	}()
+	wg.Add(1)
+
+	// 数据推送服务
+	go func() {
+		for {
+			log.Infof("Push server start success...")
+			tcpserver.WriteConn()
+			time.Sleep(time.Second * time.Duration(1))
+		}
+		wg.Done()
+	}()
+	wg.Add(1)
+
+	wg.Wait()
 }

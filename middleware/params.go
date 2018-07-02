@@ -1,4 +1,4 @@
-package middleware
+package bikemiddleware
 
 // BaseParam 请求基础参数
 type BaseParam struct {
