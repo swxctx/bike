@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/swxctx/bike/bikeWorker/mail"
 	"github.com/swxctx/bike/model/bike"
 
 	"github.com/domego/gokits/log"
@@ -133,9 +134,9 @@ func DoDealData(ip, message string) {
 	}
 	msg := strings.Split(message, "|")
 	log.Infof("msg is: %v", msg)
-	if msg[0] == "0" || msg[1] == "0" || msg[2] == "1" {
+	if msg[0] == "0" && msg[1] == "0" && msg[2] == "1" {
 		// 数据异常，存储并且进行报警
-		// mail.SendMail(bikeInfo.ById)
+		mail.SendMail(bikeInfo.ById)
 		bikeAlarm := bike.NewBikeAlarm()
 		bikeAlarm.AlarmTs = time.Now().Unix()
 		bikeAlarm.ById = bikeInfo.ById

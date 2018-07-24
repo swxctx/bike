@@ -13,8 +13,8 @@ var (
 )
 
 const (
-	// listenIp = "192.168.43.50"
-	listenIp   = "192.168.0.112"
+	listenIp = "192.168.43.50"
+	// listenIp   = "192.168.0.112"
 	listenPort = "8891"
 )
 

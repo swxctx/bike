@@ -15,8 +15,12 @@ func convertUseLog(ulog *bike.UseLog) *Detail {
 		LongiTude: ulog.LongiTude,
 		StartTs:   getTimeFormat(ulog.StartTs),
 		EndTs:     getTimeFormat(ulog.EndTs),
-		AllTs:     fmt.Sprintf("%d分钟", (ulog.EndTs-ulog.StartTs)/60),
 	}
+	all := (ulog.EndTs - ulog.StartTs) / 60
+	if all == 0 {
+		all += 1
+	}
+	result.AllTs = fmt.Sprintf("%d分钟", all)
 	return result
 }
 
